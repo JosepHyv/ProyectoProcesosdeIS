@@ -1,10 +1,17 @@
 # En este archivo van todas las cosas que no queremos que se incluyan 
 # cuando hagamos git add . 
-# debajo de esta linea comenzamos 
+# debajo de esta linea comenzamos con los archivos separados
 
+*.xml
 *.log 
 *.a
 *.class
 *.o
 *.jar
- 
+
+# ahora con las depenendcias
+
+/Biblioteca/nbproject
+/Biblioteca/nbproject/*.xml
+/Biblioteca/nbproject/*.properties
+/Biblioteca/private
