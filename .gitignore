@@ -12,6 +12,7 @@
 # ahora con las depenendcias
 
 /Biblioteca/*.xml
+/*/*.properties
 /Biblioteca/nbproject/*.xml
 /Biblioteca/nbproject/*.properties
 /Biblioteca/build/
