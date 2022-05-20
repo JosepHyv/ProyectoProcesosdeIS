@@ -3,3 +3,5 @@
 
 # Instrucciones pareceran más adelante aqui 
 1. Procastinando
+
+# enseñando git :)
