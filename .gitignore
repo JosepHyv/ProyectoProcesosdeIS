@@ -15,3 +15,5 @@
 /Biblioteca/nbproject/*.xml
 /Biblioteca/nbproject/*.properties
 /Biblioteca/private
+/Biblioteca/build/
+/Biblioteca/dist/
