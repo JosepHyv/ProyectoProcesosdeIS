@@ -43,6 +43,7 @@ CREATE TABLE `Empleados` (
 
 LOCK TABLES `Empleados` WRITE;
 /*!40000 ALTER TABLE `Empleados` DISABLE KEYS */;
+INSERT INTO `Empleados` VALUES (1234,'1989-09-16','ABCD2121212','SAMR890616HVZGPSA1','9552211234','contraChida','Encargado','123456789');
 /*!40000 ALTER TABLE `Empleados` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,6 +161,7 @@ CREATE TABLE `Usuarios` (
 
 LOCK TABLES `Usuarios` WRITE;
 /*!40000 ALTER TABLE `Usuarios` DISABLE KEYS */;
+INSERT INTO `Usuarios` VALUES ('123456789','Rick','Sanchez','Morty Soto','imaginaria','325','gucci','xalapayork','testMail@test.com','9552211234','EMPLEADO');
 /*!40000 ALTER TABLE `Usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,4 +198,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-19 16:34:55
+-- Dump completed on 2022-05-22 12:51:27

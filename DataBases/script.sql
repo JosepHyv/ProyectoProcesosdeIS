@@ -67,3 +67,50 @@ create table Prestamo(
 
 
 
+insert into Usuarios (
+	idUsuario,
+	    nombres, 
+	    apellidoPaterno,
+	    apellidoMaterno,
+	    calle,
+	    numero, 
+	    colonia, 
+	    municipio,
+	    email, 
+	    telefono, 
+	    tipoUsuario
+)
+values (
+	"123456789",
+	"Rick",
+	"Sanchez",
+	"Morty Soto",
+	"imaginaria",
+	"325",
+	"gucci",
+	"xalapayork",
+	"testMail@test.com",
+	"9552211234",
+	"EMPLEADO"
+);
+
+insert into Empleados(
+	numEmpleados,
+    fechaNacimiento,
+    nss, 
+    curp,
+    telefono,
+    contrasenia,
+    tipoContratacion,
+    idUsuario
+)
+values (
+	"1234",
+	"1989-09-16",
+	"ABCD2121212",
+	"SAMR890616HVZGPSA1",
+	"9552211234",
+	"contraChida",
+	"Encargado",
+	"123456789"
+);
