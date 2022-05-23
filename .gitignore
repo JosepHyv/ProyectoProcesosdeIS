@@ -2,7 +2,7 @@
 # cuando hagamos git add . 
 # debajo de esta linea comenzamos con los archivos separados
 
-*.xml
+
 *.log 
 *.a
 *.class
