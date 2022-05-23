@@ -14,5 +14,5 @@
 /Biblioteca/*.xml
 /Biblioteca/build/
 /Biblioteca/dist/
-!/Biblioteca/nbproject
+!/Biblioteca/nbproject/
 /**/*.xml
