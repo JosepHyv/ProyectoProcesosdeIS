@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.FXMLInicioSesionController">
+<AnchorPane id="AnchorPane" prefHeight="410.0" prefWidth="619.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.FXMLInicioSesionController">
     <children>
-        <Button layoutX="126" layoutY="90" text="Click Me!" onAction="#handleButtonAction" fx:id="button" />
-        <Label layoutX="126" layoutY="120" minHeight="16" minWidth="69" fx:id="label" />
+        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+      <Label layoutX="332.0" layoutY="88.0" prefHeight="40.0" prefWidth="217.0" text="Inicio de Sesion" textAlignment="CENTER" textFill="#9fa4dd">
+         <font>
+            <Font name="Calibri Bold" size="32.0" />
+         </font>
+      </Label>
+      <Label layoutX="305.0" layoutY="149.0" text="Numero de Empleado" />
+      <TextField fx:id="tfNumeroEmpleado" layoutX="306.0" layoutY="179.0" prefHeight="25.0" prefWidth="275.0" />
+      <Label layoutX="305.0" layoutY="230.0" text="Contraseña" />
+      <Button fx:id="btnIniciarSesion" layoutX="368.0" layoutY="311.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: #2496F3;" text="Iniciar Sesion" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+         <font>
+            <Font name="Calibri Bold" size="15.0" />
+         </font>
+      </Button>
+      <Label layoutX="322.0" layoutY="24.0" text="Biblioteca" textFill="#555edb">
+         <font>
+            <Font name="System Bold" size="42.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbErrorEmpleado" layoutX="306.0" layoutY="205.0" prefHeight="15.0" prefWidth="275.0" textFill="RED" />
+      <Label fx:id="lbErrorPassword" layoutX="304.0" layoutY="282.0" prefHeight="15.0" prefWidth="275.0" textFill="RED" />
+      <PasswordField fx:id="pfPassword" layoutX="304.0" layoutY="257.0" prefHeight="25.0" prefWidth="275.0" />
     </children>
 </AnchorPane>
