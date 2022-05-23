@@ -21,7 +21,7 @@
       <Label layoutX="305.0" layoutY="149.0" text="Numero de Empleado" />
       <TextField fx:id="tfNumeroEmpleado" layoutX="306.0" layoutY="179.0" prefHeight="25.0" prefWidth="275.0" />
       <Label layoutX="305.0" layoutY="230.0" text="Contraseña" />
-      <Button fx:id="btnIniciarSesion" layoutX="368.0" layoutY="311.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: #2496F3;" text="Iniciar Sesion" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+      <Button layoutX="368.0" layoutY="311.0" mnemonicParsing="false" onAction="#btnIniciarSesion" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: #2496F3;" text="Iniciar Sesion" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
          <font>
             <Font name="Calibri Bold" size="15.0" />
          </font>

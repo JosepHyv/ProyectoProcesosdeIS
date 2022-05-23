@@ -4,6 +4,7 @@
  */
 package biblioteca.vistas;
 
+import javafx.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -25,8 +26,6 @@ public class FXMLInicioSesionController implements Initializable {
     @FXML
     private TextField tfNumeroEmpleado;
     @FXML
-    private Button btnIniciarSesion;
-    @FXML
     private Label lbErrorEmpleado;
     @FXML
     private Label lbErrorPassword;
@@ -41,5 +40,49 @@ public class FXMLInicioSesionController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
+    @FXML
+    private void btnIniciarSesion(ActionEvent event) 
+    {
+        lbErrorEmpleado.setText("");
+        lbErrorPassword.setText("");
+        
+        String numero = tfNumeroEmpleado.getText();
+        String password = pfPassword.getText();
+        boolean isValid = true;
+        
+        if(numero.isEmpty())
+        {
+           lbErrorEmpleado.setText("El campo es obligatorio");
+           isValid = false;
+        }
+            
+        if(password.isEmpty())
+        {
+           lbErrorPassword.setText("El campo es obligatorio");
+           isValid = false;
+        }
+        
+        if(isValid)
+        {
+            irPantallaPrincipal();
+            //solo para debbug
+            System.out.println("Inicio de sesion Valido :)"); 
+        }
+    }
+    
+    private void irPantallaPrincipal()
+    {
+        /* procastinando 
+            Propuestas:
+            Hacer un menu
+            Hacer un tipo chrome con 4 pestañas por cada CU
+            
+            Si ven esto, hare las DAO y los POJO
+            */
+
+        
+    }
+
     
 }
