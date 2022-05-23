@@ -12,7 +12,7 @@
 # ahora con las depenendcias
 
 /Biblioteca/*.xml
+/Biblioteca/*.mf
 /Biblioteca/build/
 /Biblioteca/dist/
-!/Biblioteca/nbproject/
-/**/*.xml
+
