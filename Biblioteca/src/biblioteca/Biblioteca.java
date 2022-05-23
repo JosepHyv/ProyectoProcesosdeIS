@@ -31,6 +31,7 @@ public class Biblioteca extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+//Solo es una prueba, espero no explote algo
     }
     
 }
