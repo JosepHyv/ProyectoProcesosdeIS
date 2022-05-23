@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="410.0" prefWidth="619.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.FXMLInicioSesionController">
+<AnchorPane id="AnchorPane" prefHeight="410.0" prefWidth="619.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.vistas.FXMLInicioSesionController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <Label layoutX="332.0" layoutY="88.0" prefHeight="40.0" prefWidth="217.0" text="Inicio de Sesion" textAlignment="CENTER" textFill="#9fa4dd">
@@ -32,6 +32,6 @@
       </Label>
       <Label fx:id="lbErrorEmpleado" layoutX="306.0" layoutY="205.0" prefHeight="15.0" prefWidth="275.0" textFill="RED" />
       <Label fx:id="lbErrorPassword" layoutX="304.0" layoutY="282.0" prefHeight="15.0" prefWidth="275.0" textFill="RED" />
-      <PasswordField fx:id="pfPasswords" layoutX="304.0" layoutY="257.0" prefHeight="25.0" prefWidth="275.0" />
+      <PasswordField fx:id="pfPassword" layoutX="304.0" layoutY="257.0" prefHeight="25.0" prefWidth="275.0" />
     </children>
 </AnchorPane>
