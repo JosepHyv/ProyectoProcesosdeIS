@@ -1,0 +1,3 @@
+DireccionBD = jdbc:mysql://localhost:3306/biblioteca
+Usuario = usuario1
+Contrasenia =  turbocontrasenia123

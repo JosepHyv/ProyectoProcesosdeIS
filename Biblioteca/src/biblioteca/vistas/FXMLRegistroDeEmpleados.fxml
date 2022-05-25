@@ -16,37 +16,37 @@
          </font>
       </Text>
       <Text layoutX="34.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número" />
-      <ComboBox layoutX="124.0" layoutY="96.0" minHeight="30.0" prefHeight="30.0" prefWidth="109.0" promptText="Tipo" />
+      <ComboBox fx:id="comboBoxTipoContratacion" layoutX="124.0" layoutY="96.0" minHeight="30.0" prefHeight="30.0" prefWidth="109.0" promptText="Tipo" />
       <Text layoutX="124.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de contratación" />
-      <TextField layoutX="34.0" layoutY="170.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+      <TextField fx:id="textFieldNombres" layoutX="34.0" layoutY="170.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
       <Text layoutX="34.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre(s)" />
-      <TextField layoutX="243.0" layoutY="237.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+      <TextField fx:id="textFieldNss" layoutX="243.0" layoutY="237.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
       <Text layoutX="244.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Apellido paterno" />
-      <TextField layoutX="455.0" layoutY="170.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+      <TextField fx:id="textFieldApellidoM" layoutX="455.0" layoutY="170.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
       <Text layoutX="458.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Apellido materno" />
-      <TextField layoutX="34.0" layoutY="237.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0" text="CAFA941025HVZHRL03">
+      <TextField fx:id="textFieldCurp" layoutX="34.0" layoutY="237.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
-      <TextField layoutX="243.0" layoutY="170.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+      <TextField fx:id="textFieldApellidoP" layoutX="243.0" layoutY="170.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
-      <TextField layoutX="455.0" layoutY="237.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+      <TextField fx:id="textFieldRfc" layoutX="455.0" layoutY="237.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
          <font>
             <Font size="15.0" />
          </font>
@@ -54,43 +54,43 @@
       <Text layoutX="34.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CURP" />
       <Text layoutX="244.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NSS" />
       <Text layoutX="458.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RFC" />
-      <TextField layoutX="33.0" layoutY="401.0" minHeight="30.0" prefHeight="30.0" prefWidth="129.0" text="Junta de Zitacuaro">
+      <TextField fx:id="textFieldCalle" layoutX="33.0" layoutY="401.0" minHeight="30.0" prefHeight="30.0" prefWidth="129.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
-      <TextField layoutX="168.0" layoutY="401.0" minHeight="30.0" prefHeight="30.0" prefWidth="65.0" text="11501">
+      <TextField fx:id="textFieldNumero" layoutX="168.0" layoutY="401.0" minHeight="30.0" prefHeight="30.0" prefWidth="65.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
-      <TextField layoutX="455.0" layoutY="401.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+      <TextField fx:id="textFieldMunicipio" layoutX="455.0" layoutY="401.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
-      <TextField layoutX="242.0" layoutY="401.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0" text="Mariano Matamoros">
+      <TextField fx:id="textFieldColonia" layoutX="242.0" layoutY="401.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
-      <TextField layoutX="33.0" layoutY="474.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+      <TextField fx:id="textFieldEmail" layoutX="33.0" layoutY="474.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
-      <TextField layoutX="242.0" layoutY="474.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+      <TextField fx:id="textFieldTelefono1" layoutX="242.0" layoutY="474.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
-      <TextField layoutX="454.0" layoutY="474.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+      <TextField fx:id="textFieldTelefono2" layoutX="454.0" layoutY="474.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
-      <Button defaultButton="true" layoutX="455.0" layoutY="588.0" minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Dar de alta" />
-      <Button cancelButton="true" layoutX="314.0" layoutY="588.0" minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="129.0" text="Cancelar" />
+      <Button fx:id="buttonDarDeAlta" defaultButton="true" layoutX="455.0" layoutY="588.0" minHeight="30.0" mnemonicParsing="false" onAction="#darDeAlta" prefHeight="30.0" prefWidth="200.0" text="Dar de alta" />
+      <Button fx:id="buttonCancelar" cancelButton="true" layoutX="314.0" layoutY="588.0" minHeight="30.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="129.0" text="Cancelar" />
       <Text layoutX="32.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo electrónico" />
       <Text layoutX="242.0" layoutY="469.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono 1" />
       <Text layoutX="456.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teléfono 2" />
@@ -98,7 +98,7 @@
       <Text layoutX="166.0" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0" text="#" />
       <Text layoutX="242.0" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Colonia" />
       <Text layoutX="458.0" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Municipio" />
-      <DatePicker editable="false" layoutX="34.0" layoutY="301.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0" showWeekNumbers="true" />
+      <DatePicker fx:id="datePickerNacimiento" editable="false" layoutX="34.0" layoutY="301.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0" showWeekNumbers="true" />
       <Text layoutX="34.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha de nacimiento" />
       <TextField fx:id="textFieldNumeroEmpleado" layoutX="33.0" layoutY="96.0" prefHeight="30.0" prefWidth="77.0" />
    </children>
