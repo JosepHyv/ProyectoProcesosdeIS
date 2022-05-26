@@ -14,10 +14,7 @@ import biblioteca.pojo.constantes.ConstanteTiposDeContratacion;
 import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.collections.FXCollections;
@@ -34,6 +31,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.scene.control.ButtonType;
 
 /**
  * FXML Controller class
@@ -78,30 +76,12 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
     private DatePicker datePickerNacimiento;
     @FXML
     private TextField textFieldNumeroEmpleado;
-    
-    private String numEmpleado;
-    private String tipoContratacion;
-    private String nombre;
-    private String apellidoPaterno;
-    private String apellidoMaterno ;
-    private String curp;
-    private String nss;
-    private String rfc;
-    private LocalDate fechaNacimiento;
-    private String calle;
-    private String numero;
-    private String colonia;
-    private String municipio;
-    private String email;
-    private String telefono1;
-    private String telefono2;
 
     public void start(Stage stage) throws Exception {
         URL url = new File("src/biblioteca/vistas/FXMLRegistroDeEmpleados.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         DataBaseConnection db = new DataBaseConnection();
         Scene scene = new Scene(root);
-        
         stage.setScene(scene);
         stage.show();
     }
@@ -118,8 +98,20 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        inicializarComboBoxTipoContratacion();
-    }    
+        try {
+            inicializarTextFieldNumEmpleados();
+            inicializarComboBoxTipoContratacion();
+        } catch (SQLException sqlException) {
+            Utilidades.mensajePerdidaDeConexion();
+        }
+    }
+
+    private void inicializarTextFieldNumEmpleados() throws SQLException{
+        EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+        final int NUMERO_DEL_NUEVO_EMPLEADO = empleadoDAO.obtenerNumEmpleadoSiguiente();
+        this.textFieldNumeroEmpleado.setText(Integer.toString(NUMERO_DEL_NUEVO_EMPLEADO));
+        this.textFieldNumeroEmpleado.setEditable(false);
+    }
 
     private void inicializarComboBoxTipoContratacion(){
         ObservableList<String> tiposDeContratacion = FXCollections.observableArrayList(
@@ -128,20 +120,20 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
         this.comboBoxTipoContratacion.setItems(tiposDeContratacion);
     }
     
-    
     @FXML
     private void darDeAlta(ActionEvent event) {
         try {
-            obtenerEntradas();
-            validarEntradas();
-            //registrarEmpleado();
+            validarCamposLlenos();
+            Usuario usuarioDelNuevoEmpleado = crearUsuarioDelNuevoEmpleado();
+            Empleado nuevoEmpleado = crearNuevoEmpleado(usuarioDelNuevoEmpleado);
+            registrarEmpleado(nuevoEmpleado);
             Utilidades.mostrarAlertaSinConfirmacion(
                 "Aviso", 
                 "La información se ha guardado correctamente",
                 Alert.AlertType.INFORMATION);
             terminar();
-        } catch (SQLException sqlException) {
-            Utilidades.mensajePerdidaDeConexion();
+        }catch (SQLException sqlException) {
+            Utilidades.mensajePerdidaDeConexion();            
         } catch (IllegalArgumentException iaException){
             Utilidades.mostrarAlertaConfirmacion(
                 "Aviso", 
@@ -151,7 +143,7 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
         }
     }
     
-    private void terminar(){
+    private void terminar() throws SQLException{
         this.textFieldNumeroEmpleado.setText("");
         this.comboBoxTipoContratacion.getSelectionModel().clearSelection();
         this.textFieldNombres.setText("");
@@ -168,121 +160,97 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
         this.textFieldEmail.setText("");
         this.textFieldTelefono1.setText("");
         this.textFieldTelefono2.setText("");
+        this.inicializarTextFieldNumEmpleados();
     }
     
-    private void registrarEmpleado() throws SQLException{
-        Usuario usuarioDelNuevoEmpleado = crearUsuarioDelNuevoEmpleado();
-        new UsuarioDAO().registrarUsuario(usuarioDelNuevoEmpleado);
-        Empleado nuevoEmpleado = crearNuevoEmpleado(usuarioDelNuevoEmpleado.getIdUsuario());
-        new EmpleadoDAO().registrarEmpleado(nuevoEmpleado);
+    private void registrarEmpleado(Empleado nuevoEmpleado) throws SQLException{
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.registrarUsuario(nuevoEmpleado.getUsuario());
+        EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+        empleadoDAO.registrarEmpleado(nuevoEmpleado);
     }
     
-    private Empleado crearNuevoEmpleado(String idUsuario){
+    private void validarCamposLlenos() throws IllegalArgumentException{
+        final boolean TODOS_LOS_CAMPOS_ESTAN_LLENOS=
+            validarCamposDeTextoLlenos(this.textFieldNombres.getText())
+            && validarCamposDeTextoLlenos(this.textFieldNombres.getText())
+            && validarCamposDeTextoLlenos(this.textFieldApellidoP.getText())
+            && validarCamposDeTextoLlenos(this.textFieldApellidoM.getText())
+            && validarCamposDeTextoLlenos(this.textFieldCalle.getText())
+            && validarCamposDeTextoLlenos(this.textFieldNumero.getText())
+            && validarCamposDeTextoLlenos(this.textFieldColonia.getText())
+            && validarCamposDeTextoLlenos(this.textFieldMunicipio.getText())
+            && validarCamposDeTextoLlenos(this.textFieldEmail.getText())
+            && validarCamposDeTextoLlenos(this.textFieldTelefono1.getText())
+            && validarCamposDeTextoLlenos(this.textFieldTelefono2.getText())
+            && this.datePickerNacimiento.getValue()!=null
+            && !this.comboBoxTipoContratacion.getSelectionModel().isEmpty();
+        if (TODOS_LOS_CAMPOS_ESTAN_LLENOS==false){
+            throw new IllegalArgumentException("No puede dejar ningún campo vacío.");
+        }
+    }
+    
+    private boolean validarCamposDeTextoLlenos(String cadenaEnElCampo){
+        return (cadenaEnElCampo.trim().length() > 0);
+    }
+    
+    private Empleado crearNuevoEmpleado(Usuario usuarioDelNuevoEmpleado) 
+    throws SQLException, IllegalArgumentException{
         Empleado nuevoEmpleado = new Empleado();
-        nuevoEmpleado.setNumEmpleado(Integer.parseInt(this.numEmpleado));
-        nuevoEmpleado.setFechaNacimiento(this.fechaNacimiento);
-        nuevoEmpleado.setNss(this.nss);
-        nuevoEmpleado.setCurp(this.curp);
-        nuevoEmpleado.setTelefonoEmpleado(this.telefono2);
-        nuevoEmpleado.setContrasenia(this.curp);
+        nuevoEmpleado.setNumEmpleado(Integer.parseInt(this.textFieldNumeroEmpleado.getText()));
+        nuevoEmpleado.setFechaNacimiento(this.datePickerNacimiento.getValue());
+        nuevoEmpleado.setNss(this.textFieldNss.getText());
+        nuevoEmpleado.setCurp(this.textFieldCurp.getText());
+        nuevoEmpleado.setRfc(this.textFieldRfc.getText());
+        nuevoEmpleado.setTelefonoEmpleado(this.textFieldTelefono2.getText());
+        nuevoEmpleado.setContrasenia(usuarioDelNuevoEmpleado.getIdUsuario());
         nuevoEmpleado.setTipoContratacion(
-            this.comboBoxTipoContratacion.getSelectionModel().getSelectedItem().toString()
+            this.comboBoxTipoContratacion.getSelectionModel().getSelectedItem()
         );
-        nuevoEmpleado.setIdUsuario(idUsuario);
+        nuevoEmpleado.setUsuario(usuarioDelNuevoEmpleado);
+        nuevoEmpleado.validar();
+        
         return nuevoEmpleado;
     }
     
-    private Usuario crearUsuarioDelNuevoEmpleado(){
-        final int NUM_EMPLEADO = Integer.parseInt(this.numEmpleado);
-        final String ID_USUARIO_EMPLEADO = "EMPLEADO_"+NUM_EMPLEADO;
+    private Usuario crearUsuarioDelNuevoEmpleado() throws SQLException, IllegalArgumentException{
+        final int NUM_EMPLEADO = Integer.parseInt(this.textFieldNumeroEmpleado.getText());
+        final String ID_USUARIO_EMPLEADO = "EMPLEADO"+NUM_EMPLEADO;
         Usuario usuarioDelNuevoEmpleado = new Usuario();
         usuarioDelNuevoEmpleado.setIdUsuario(ID_USUARIO_EMPLEADO);
-        usuarioDelNuevoEmpleado.setNombre(this.nombre);
-        usuarioDelNuevoEmpleado.setApellidoPaterno(this.apellidoPaterno);
-        usuarioDelNuevoEmpleado.setApellidoMaterno(this.apellidoMaterno);
-        usuarioDelNuevoEmpleado.setCalle(this.calle);
-        usuarioDelNuevoEmpleado.setNumero(this.numero);
-        usuarioDelNuevoEmpleado.setColonia(this.colonia);
-        usuarioDelNuevoEmpleado.setMunicipio(this.municipio);
-        usuarioDelNuevoEmpleado.setEmail(this.email);
-        usuarioDelNuevoEmpleado.setTelefono(this.telefono1);
+        usuarioDelNuevoEmpleado.setNombre(this.textFieldNombres.getText());
+        usuarioDelNuevoEmpleado.setApellidoPaterno(this.textFieldApellidoP.getText());
+        usuarioDelNuevoEmpleado.setApellidoMaterno(this.textFieldApellidoM.getText());
+        usuarioDelNuevoEmpleado.setCalle(this.textFieldCalle.getText());
+        usuarioDelNuevoEmpleado.setNumero(this.textFieldNumero.getText());
+        usuarioDelNuevoEmpleado.setColonia(this.textFieldColonia.getText());
+        usuarioDelNuevoEmpleado.setMunicipio(this.textFieldMunicipio.getText());
+        usuarioDelNuevoEmpleado.setEmail(this.textFieldEmail.getText());
+        usuarioDelNuevoEmpleado.setTelefono(this.textFieldTelefono1.getText());
         usuarioDelNuevoEmpleado.setTipoUsuario("EMPLEADO");
+        usuarioDelNuevoEmpleado.validar();
+        
         return usuarioDelNuevoEmpleado;
     }
-    
-    private void validarCamposLlenos(){
-        boolean losCamposEstanLlenos =
-            !this.numEmpleado.isEmpty()&&
-            !this.tipoContratacion.isEmpty() &&
-            !this.nombre.isEmpty()&&
-            !this.apellidoPaterno.isEmpty()&&
-            !this.apellidoMaterno.isEmpty()&&
-            !this.curp.isEmpty()&&
-            !this.nss.isEmpty() &&
-            !this.rfc.isEmpty() &&
-             this.fechaNacimiento!=null &&
-            !this.calle.isEmpty()&&
-            !this.numero.isEmpty() &&
-            !this.colonia.isEmpty()&&
-            !this.municipio.isEmpty()&&
-            !this.email.isEmpty() &&
-            !this.telefono1.isEmpty()&&
-            !this.telefono2.isEmpty();
-        if (losCamposEstanLlenos == false){
-            throw new IllegalArgumentException("No puede dejar ningún campo vacío");
-        }
-    }
 
-    private void validarEntradas() throws SQLException, IllegalArgumentException{ 
-        validarCamposLlenos();
-        final String CARACTERES_NUMERICOS = "\\d*";
-        final String CARACTERES_ALFABETICOS = "[a-zA-ZáéíóúÁÉÍÓÚ ]+";
-        final String CARACTERES_ALFANUMERICOS = "[\\d*a-zA-ZáéíóúÁÉÍÓÚ ]+";
-        validarCaracteres(this.numEmpleado, "Número de empleado", CARACTERES_NUMERICOS);
-        validarCaracteres(this.nombre,"Nombre",CARACTERES_ALFABETICOS);
-        validarCaracteres(this.apellidoPaterno,"Apellido paterno",CARACTERES_ALFABETICOS);
-        validarCaracteres(this.apellidoMaterno,"Apellido materno",CARACTERES_ALFABETICOS);
-        validarCaracteres(this.curp,"CURP",CARACTERES_ALFANUMERICOS);
-        validarCaracteres(this.nss,"NSS",CARACTERES_NUMERICOS);
-        validarCaracteres(this.rfc,"RFC",CARACTERES_ALFANUMERICOS);
-        validarCaracteres(this.calle,"Calle",CARACTERES_ALFANUMERICOS);
-        validarCaracteres(this.numero,"Número",CARACTERES_ALFANUMERICOS);
-        validarCaracteres(this.colonia,"Colonia",CARACTERES_ALFANUMERICOS);
-        validarCaracteres(this.municipio,"Municipio",CARACTERES_ALFANUMERICOS);
-        validarCaracteres(this.telefono1,"Teléfono 1",CARACTERES_NUMERICOS);
-        validarCaracteres(this.telefono2,"Teléfono 2",CARACTERES_NUMERICOS);
-    }
-    
-    private void obtenerEntradas(){
-        this.numEmpleado = this.textFieldNumeroEmpleado.getText();
-        this.tipoContratacion = this.comboBoxTipoContratacion.getSelectionModel().getSelectedItem();
-        this.nombre = this.textFieldNombres.getText();
-        this.apellidoPaterno = this.textFieldApellidoP.getText();
-        this.apellidoMaterno = this.textFieldApellidoM.getText();
-        this.curp = this.textFieldCurp.getText();
-        this.nss = this.textFieldNss.getText();
-        this.rfc = this.textFieldRfc.getText();
-        this.fechaNacimiento = this.datePickerNacimiento.getValue();
-        this.calle = this.textFieldCalle.getText();
-        this.numero = this.textFieldNumero.getText();
-        this.colonia = this.textFieldColonia.getText();
-        this.municipio = this.textFieldMunicipio.getText();
-        this.email = this.textFieldEmail.getText();
-        this.telefono1 = this.textFieldTelefono1.getText();
-        this.telefono2 = this.textFieldTelefono2.getText();
-    }
-    
-    private void validarCaracteres
-    (String campo, String nombreCampo, String caracteresAceptados)
-    throws IllegalArgumentException{
-        if (!campo.matches(caracteresAceptados)){
-            throw new IllegalArgumentException("El campo "+nombreCampo+" contiene caracteres no permitidos.");
-        }
-    }
-    
     @FXML
     private void cancelar(ActionEvent event) {
-        System.out.println("asdf");
+        Utilidades.mostrarAlertaConfirmacion(
+            "Cancelar operación", 
+            "¿Está seguro de que desea cancelar la operación?", 
+            Alert.AlertType.CONFIRMATION);
+        boolean confirmarCancelacion =
+            Utilidades.getOption().orElse(ButtonType.CANCEL).getButtonData().isDefaultButton();
+        cerrar(confirmarCancelacion);
     }
+
+    private void cerrar(boolean confirmacion){
+        if (confirmacion == true){
+            Stage stage = (Stage)buttonCancelar.getScene().getWindow();
+            stage.close();   
+        }
+    }
+    
+    
     
 }

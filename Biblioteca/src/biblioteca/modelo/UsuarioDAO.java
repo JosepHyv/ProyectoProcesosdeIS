@@ -9,6 +9,7 @@ import biblioteca.dataaccess.DataBaseConnection;
 import biblioteca.pojo.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -45,18 +46,23 @@ public class UsuarioDAO {
         return verificacionRegistro;
     }
     
-    public boolean asignarTelefonoAUsuario(Usuario usuario) throws SQLException{
-        String consulta = "UPDATE usuarios SET telefono = ? WHERE idUsuario = ?";
-        boolean verificacionAsignacion = false;
+    public boolean encontrarUsuarioPorIdUsuario (String idUsuario) throws SQLException{
+        String consulta = 
+        "SELECT idUsuario "+
+        "FROM   usuarios "+
+        "WHERE  idUsuario = ?";
+        boolean verificacionExistencia = false;
         DataBaseConnection db = new DataBaseConnection();
         try(Connection conexion = db.getConexion()){
             PreparedStatement sentencia = conexion.prepareStatement(consulta);
-            sentencia.setString(1,usuario.getIdUsuario());
-            sentencia.setString(2,usuario.getTelefono());
-            verificacionAsignacion = sentencia.executeUpdate()!=0;
+            sentencia.setString(1, idUsuario);
+            ResultSet resultado = sentencia.executeQuery();
+            verificacionExistencia = resultado.next();
         }finally{
             db.desconectar();
         }
-        return verificacionAsignacion;
+        return verificacionExistencia;
     }
+    
+    
 }
