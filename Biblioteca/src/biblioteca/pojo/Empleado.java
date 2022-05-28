@@ -5,31 +5,34 @@
  */
 package biblioteca.pojo;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 /**
  *
  * @author ale71
  */
-public class Empleado extends Usuario{
+public class Empleado extends Usuario implements Validable{
     private int numEmpleado;
     private LocalDate fechaNacimiento;
     private String nss;
     private String curp;
+    private String rfc;
     private String telefonoEmpleado;
     private String contrasenia;
     private String tipoContratacion;
-    private String idUsuario;
+    private Usuario usuario;
 
     public Empleado() {
         this.numEmpleado=-1;
         this.fechaNacimiento=LocalDate.now();
         this.nss="sinNSS";
         this.curp="sinCURP";
+        this.rfc="sinRFC";
         this.telefonoEmpleado="sinTelefonoEmpleado";
         this.contrasenia="sinContrasenia";
         this.tipoContratacion="sinTipoContratacion";
-        this.idUsuario="sinIdUsuario";
+        this.usuario= new Usuario();
     }
 
     public int getNumEmpleado() {
@@ -60,8 +63,8 @@ public class Empleado extends Usuario{
         return tipoContratacion;
     }
 
-    public String getIdUsuario() {
-        return idUsuario;
+    public Usuario getUsuario() {
+        return this.usuario;
     }
     
     public void setNumEmpleado(int numEmpleado) {
@@ -92,20 +95,27 @@ public class Empleado extends Usuario{
         this.tipoContratacion = tipoContratacion;
     }
 
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
+
+    public String getRfc() {
+        return rfc;
+    }
+
+    public void setRfc(String rfc) {
+        this.rfc = rfc;
+    }
+    
 
     @Override
     public String toString() {
-        return 
-            "Empleado{" + "numEmpleado=" + numEmpleado + ", fechaNacimiento=" + 
-            fechaNacimiento + ", nss=" + nss + ", curp=" + curp + ", telefono=" + 
-            telefonoEmpleado + ", contrasenia=" + contrasenia + ", tipoContratacion=" + 
-            tipoContratacion + ", idUsuario=" + idUsuario + '}';
+        return "Empleado{" + "numEmpleado=" + numEmpleado + ", fechaNacimiento=" + 
+                fechaNacimiento + ", nss=" + nss + ", curp=" + curp + ", rfc=" + rfc + 
+                ", telefonoEmpleado=" + telefonoEmpleado + ", contrasenia=" + contrasenia + 
+                ", tipoContratacion=" + tipoContratacion + ", usuario=" + usuario.toString() + '}';
     }
-    
-    
+
     @Override
     public boolean equals(Object objeto) {
         boolean isEquals=false;
@@ -122,6 +132,11 @@ public class Empleado extends Usuario{
                 this.tipoContratacion.equals(otro.tipoContratacion);
         }
         return isEquals;
+    }
+    
+    @Override
+    public void validar() throws SQLException, IllegalArgumentException{
+        new ValidacionServant().validarEmpleado(this);
     }
     
 }

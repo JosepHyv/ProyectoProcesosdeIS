@@ -5,11 +5,13 @@
  */
 package biblioteca.pojo;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author ale71
  */
-public class Usuario {
+public class Usuario implements Validable{
     private String idUsuario;
     private String nombre;
     private String apellidoPaterno;
@@ -149,6 +151,11 @@ public class Usuario {
                 this.apellidoMaterno.equals(otro.apellidoPaterno);
         }
         return isEquals;
+    }
+
+    @Override
+    public void validar() throws SQLException, IllegalArgumentException {
+        new ValidacionServant().validarUsuario(this);
     }
     
 }

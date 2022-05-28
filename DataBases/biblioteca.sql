@@ -23,12 +23,13 @@ DROP TABLE IF EXISTS `Empleados`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Empleados` (
-  `numEmpleados` int NOT NULL COMMENT 'Esta es la llave primaria',
+  `numEmpleados` int NOT NULL AUTO_INCREMENT COMMENT 'Esta es la llave primaria',
   `fechaNacimiento` date NOT NULL,
   `nss` varchar(11) NOT NULL,
   `curp` varchar(20) NOT NULL,
+  `rfc` varchar(20) NOT NULL,
   `telefono` varchar(10) NOT NULL,
-  `contrasenia` varchar(50) NOT NULL,
+  `contrasenia` varchar(128) NOT NULL,
   `tipoContratacion` varchar(50) NOT NULL,
   `idUsuario` varchar(50) NOT NULL COMMENT 'Columna para llave primaria de Usuarios',
   PRIMARY KEY (`numEmpleados`),
@@ -43,7 +44,7 @@ CREATE TABLE `Empleados` (
 
 LOCK TABLES `Empleados` WRITE;
 /*!40000 ALTER TABLE `Empleados` DISABLE KEYS */;
-INSERT INTO `Empleados` VALUES (1234,'1989-09-16','ABCD2121212','SAMR890616HVZGPSA1','9552211234','contraChida','Encargado','123456789');
+INSERT INTO `Empleados` VALUES (1234,'1989-09-16','ABCD2121212','SAMR890616HVZGPSA1','CAFA941025HVZHRL03','9552211234','contraChida','Encargado','123456789');
 /*!40000 ALTER TABLE `Empleados` ENABLE KEYS */;
 UNLOCK TABLES;
 
