@@ -10,8 +10,12 @@ package biblioteca.pojo.constantes;
  * @author ale71
  */
 public enum ConstanteCaracteresLegales {
-    NUMERICOS("\\d*"), ALFABETICOS("[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+"),
-    ALFANUMERICOS("[\\d*a-zA-ZáéíóúÁÉÍÓÚ ]+"),VACIO(".*\\w.*");
+    NUMERICOS("\\d*"), 
+    ALFABETICOS_VALIDACION("[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+"),
+    ALFABETICOS_TEXTFIELD("a-zA-ZñÑáéíóúÁÉÍÓÚ +"),
+    ALFANUMERICOS_VALIDACION("[\\d*a-zA-ZáéíóúÁÉÍÓÚ ]+"),
+    ALFANUMERICOS_TEXTFIELD("\\d*a-zA-ZáéíóúÁÉÍÓÚ +"),
+    VACIO(".*\\w.*");
     
     private String caracteres;
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -7,6 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import biblioteca.pojo.SecureTextField?>
 
 <AnchorPane id="AnchorPane" prefHeight="653.0" prefWidth="703.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.vistas.FXMLRegistroDeEmpleadosController">
    <children>
@@ -18,72 +20,76 @@
       <Text layoutX="34.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número" />
       <Text layoutX="124.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de contratación" />
       <ComboBox fx:id="comboBoxTipoContratacion" layoutX="124.0" layoutY="96.0" minHeight="30.0" prefHeight="30.0" prefWidth="109.0" promptText="Tipo" />
-      <TextField fx:id="textFieldNombres" layoutX="34.0" layoutY="170.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="textFieldApellidoP" layoutX="243.0" layoutY="170.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="textFieldApellidoM" layoutX="455.0" layoutY="170.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="textFieldCurp" layoutX="34.0" layoutY="237.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="textFieldNss" layoutX="243.0" layoutY="237.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="textFieldRfc" layoutX="455.0" layoutY="237.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
+      <Group fx:id="textFieldGroup" layoutX="33.0" layoutY="170.0">
+         <children>
+            <SecureTextField fx:id="textFieldNombres" layoutX="1.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </SecureTextField>
+            <SecureTextField fx:id="textFieldApellidoP" layoutX="210.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </SecureTextField>
+            <SecureTextField fx:id="textFieldApellidoM" layoutX="422.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </SecureTextField>
+            <SecureTextField fx:id="textFieldCurp" layoutX="1.0" layoutY="67.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </SecureTextField>
+            <SecureTextField fx:id="textFieldNss" layoutX="210.0" layoutY="67.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </SecureTextField>
+            <SecureTextField fx:id="textFieldRfc" layoutX="422.0" layoutY="67.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </SecureTextField>
+            <SecureTextField fx:id="textFieldCalle" layoutY="231.0" minHeight="30.0" prefHeight="30.0" prefWidth="129.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </SecureTextField>
+            <SecureTextField fx:id="textFieldNumero" layoutX="135.0" layoutY="231.0" minHeight="30.0" prefHeight="30.0" prefWidth="65.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </SecureTextField>
+            <SecureTextField fx:id="textFieldColonia" layoutX="209.0" layoutY="231.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </SecureTextField>
+            <SecureTextField fx:id="textFieldMunicipio" layoutX="422.0" layoutY="231.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </SecureTextField>
+            <SecureTextField fx:id="textFieldEmail" layoutY="304.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </SecureTextField>
+            <SecureTextField fx:id="textFieldTelefono1" layoutX="209.0" layoutY="304.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </SecureTextField>
+            <SecureTextField fx:id="textFieldTelefono2" layoutX="421.0" layoutY="304.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </SecureTextField>
+         </children>
+      </Group>
       <DatePicker fx:id="datePickerNacimiento" editable="false" layoutX="34.0" layoutY="301.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0" showWeekNumbers="true" />
-      <TextField fx:id="textFieldCalle" layoutX="33.0" layoutY="401.0" minHeight="30.0" prefHeight="30.0" prefWidth="129.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="textFieldNumero" layoutX="168.0" layoutY="401.0" minHeight="30.0" prefHeight="30.0" prefWidth="65.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="textFieldColonia" layoutX="242.0" layoutY="401.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="textFieldMunicipio" layoutX="455.0" layoutY="401.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="textFieldEmail" layoutX="33.0" layoutY="474.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="textFieldTelefono1" layoutX="242.0" layoutY="474.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="textFieldTelefono2" layoutX="454.0" layoutY="474.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
       <Button fx:id="buttonCancelar" cancelButton="true" layoutX="314.0" layoutY="588.0" minHeight="30.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="30.0" prefWidth="129.0" text="Cancelar" />
       <Button fx:id="buttonDarDeAlta" defaultButton="true" layoutX="455.0" layoutY="588.0" minHeight="30.0" mnemonicParsing="false" onAction="#darDeAlta" prefHeight="30.0" prefWidth="200.0" text="Dar de alta" />
       <Text layoutX="34.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre(s)" />

@@ -26,7 +26,6 @@ public class ValidacionServant {
     public void validarEmpleado(Validable objeto) throws SQLException, IllegalArgumentException{
         if (objeto!= null && objeto instanceof Empleado){
             Empleado empleadoAValidar = (Empleado) objeto;
-            
             validarCaracteresEnCamposDelEmpleado(empleadoAValidar);
             validarNumEmpleadoNuevo(empleadoAValidar.getNumEmpleado());
             validarCURPNuevo(empleadoAValidar.getCurp());
@@ -41,31 +40,30 @@ public class ValidacionServant {
         validarCaracteres(empleado.getNss(), "NSS", 
                 ConstanteCaracteresLegales.NUMERICOS.getCaracteres());
         validarCaracteres(empleado.getCurp(), "CURP", 
-                ConstanteCaracteresLegales.ALFANUMERICOS.getCaracteres());
+                ConstanteCaracteresLegales.ALFANUMERICOS_VALIDACION.getCaracteres());
         validarCaracteres(empleado.getRfc(), "RFC", 
-                ConstanteCaracteresLegales.ALFANUMERICOS.getCaracteres());
+                ConstanteCaracteresLegales.ALFANUMERICOS_VALIDACION.getCaracteres());
         validarCaracteres(empleado.getTelefonoEmpleado(), "Teléfono 2", 
                 ConstanteCaracteresLegales.NUMERICOS.getCaracteres());
     }
     
     public void validarCaracteresEnCamposDelUsuario(Usuario usuario){
-        
         validarCaracteres(usuario.getIdUsuario(), "IdUsuario", 
-                ConstanteCaracteresLegales.ALFANUMERICOS.getCaracteres());
+                ConstanteCaracteresLegales.ALFANUMERICOS_VALIDACION.getCaracteres());
         validarCaracteres(usuario.getNombre(), "Nombres", 
-                ConstanteCaracteresLegales.ALFABETICOS.getCaracteres());
+                ConstanteCaracteresLegales.ALFABETICOS_VALIDACION.getCaracteres());
         validarCaracteres(usuario.getApellidoPaterno(), "Apellido Paterno", 
-                ConstanteCaracteresLegales.ALFABETICOS.getCaracteres());
+                ConstanteCaracteresLegales.ALFABETICOS_VALIDACION.getCaracteres());
         validarCaracteres(usuario.getApellidoMaterno(), "Apellido Materno", 
-                ConstanteCaracteresLegales.ALFABETICOS.getCaracteres());
+                ConstanteCaracteresLegales.ALFABETICOS_VALIDACION.getCaracteres());
         validarCaracteres(usuario.getCalle(), "Calle", 
-                ConstanteCaracteresLegales.ALFANUMERICOS.getCaracteres());
+                ConstanteCaracteresLegales.ALFANUMERICOS_VALIDACION.getCaracteres());
         validarCaracteres(usuario.getNumero(), "Número", 
-                ConstanteCaracteresLegales.ALFANUMERICOS.getCaracteres());
+                ConstanteCaracteresLegales.ALFANUMERICOS_VALIDACION.getCaracteres());
         validarCaracteres(usuario.getColonia(), "Colonia", 
-                ConstanteCaracteresLegales.ALFANUMERICOS.getCaracteres());
+                ConstanteCaracteresLegales.ALFANUMERICOS_VALIDACION.getCaracteres());
         validarCaracteres(usuario.getMunicipio(), "Municipio", 
-                ConstanteCaracteresLegales.ALFANUMERICOS.getCaracteres());
+                ConstanteCaracteresLegales.ALFANUMERICOS_VALIDACION.getCaracteres());
         validarCaracteres(usuario.getTelefono(), "Telefono", 
                 ConstanteCaracteresLegales.NUMERICOS.getCaracteres());
     }
@@ -111,12 +109,12 @@ public class ValidacionServant {
         final boolean EL_ID_USUARIO_EXISTE_EN_BASE_DE_DATOS = 
             new UsuarioDAO().encontrarUsuarioPorIdUsuario(idUsuario);
         if (EL_ID_USUARIO_EXISTE_EN_BASE_DE_DATOS == true){
-            throw new IllegalArgumentException("El identificador del usuario que ha ingresado "
+            throw new IllegalArgumentException("El identificador de usuario ingresado "
                 + "ya existe en el sistema. Por favor, verifíque la información e inténtelo de nuevo.");
         }
     }
     
-    private void validarCaracteres
+    public void validarCaracteres
     (String campo, String nombreCampo, String caracteresAceptados)
     throws IllegalArgumentException{
         if (!campo.matches(caracteresAceptados)){
