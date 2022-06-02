@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Text?>
 <?import biblioteca.pojo.SecureTextField?>
 
-<AnchorPane id="AnchorPane" prefHeight="653.0" prefWidth="703.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.vistas.FXMLRegistroDeEmpleadosController">
+<AnchorPane id="AnchorPane" prefHeight="653.0" prefWidth="703.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.vistas.FXMLRegistroDeEmpleadosController">
    <children>
       <Text layoutX="34.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingrese los datos del nuevo empleado.">
          <font>

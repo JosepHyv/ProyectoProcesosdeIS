@@ -143,4 +143,28 @@ public class EmpleadoDAO {
         }
         return verificacionExistencia;
     }
+    public Empleado obtenerEmpleadoPorNumEmpleadoYContrasenia
+    (int numEmpleado, String contraseniaSinEncriptar) throws SQLException{
+        String consulta = 
+        "SELECT * FROM empleados WHERE numEmpleados = ? AND contrasenia = ?;";
+        Empleado empleadoEncontrado = new Empleado();
+        DataBaseConnection db = new DataBaseConnection();
+        try(Connection conexion = db.getConexion()){
+            PreparedStatement sentencia = conexion.prepareStatement(consulta);
+            EncriptadorSHA512 encriptador = new EncriptadorSHA512();
+            sentencia.setInt(1, numEmpleado);
+            sentencia.setString(2, encriptador.encriptarCadena(contraseniaSinEncriptar));
+            ResultSet resultado = sentencia.executeQuery();
+            if (resultado.next()){
+                empleadoEncontrado.setNumEmpleado(numEmpleado);
+                empleadoEncontrado.setNss(resultado.getString("nss"));
+                empleadoEncontrado.setCurp(resultado.getString("curp"));
+                empleadoEncontrado.setContrasenia(resultado.getString("contrasenia"));
+                empleadoEncontrado.setTipoContratacion(resultado.getString("tipoContratacion"));
+            }
+        }finally{
+            db.desconectar();
+        }
+        return empleadoEncontrado;
+    }
 }

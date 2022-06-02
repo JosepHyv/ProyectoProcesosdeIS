@@ -4,6 +4,12 @@
  */
 package biblioteca;
 
+import biblioteca.dataaccess.DataBaseConnection;
+import biblioteca.modelo.EmpleadoDAO;
+import biblioteca.modelo.UsuarioDAO;
+import biblioteca.pojo.Empleado;
+import biblioteca.pojo.Usuario;
+import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
