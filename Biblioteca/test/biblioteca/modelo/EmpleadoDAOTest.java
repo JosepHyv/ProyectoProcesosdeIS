@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 //import static org.junit.jupiter.api.Assertions.assertNotEquals;
 //import static org.junit.jupiter.api.Assertions.assertThrows;
 //import org.junit.jupiter.api.Test;
