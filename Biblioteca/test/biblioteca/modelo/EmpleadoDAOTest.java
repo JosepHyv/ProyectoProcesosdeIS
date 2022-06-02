@@ -11,13 +11,13 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import org.junit.jupiter.api.Test;
-//import org.junit.Test;
-//import static org.junit.Assert.*;
-//import org.junit.Before;
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertNotEquals;
+//import static org.junit.jupiter.api.Assertions.assertThrows;
+//import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import org.junit.Before;
 
 /**
  *
@@ -28,9 +28,10 @@ public class EmpleadoDAOTest {
     public EmpleadoDAOTest() {
     }
 
-    //@Before
+    @Before
     public void setUp() throws Exception {
         empleadoTest = new Empleado();
+        empleadoTest.setNumEmpleado(420);
         empleadoTest.setIdUsuario("EMPLEADOTEST");
         empleadoTest.setContrasenia(
                 new EncriptadorSHA512().encriptarCadena("EMPLEADOTEST")
@@ -242,6 +243,26 @@ public class EmpleadoDAOTest {
             EmpleadoDAO instance = new EmpleadoDAO();
             boolean expResult = false;
             boolean result = instance.encontrarEmpleadoPorNumEmpleadoYContrasenia(numEmpleado, contraseniaSinEncriptar);
+            assertEquals(expResult, result);
+        } catch (SQLException ex) {
+            Logger.getLogger(EmpleadoDAOTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Test of obtenerEmpleadoPorNumEmpleadoYContrasenia method, of class EmpleadoDAO.
+     */
+    @org.junit.Test
+    public void testObtenerEmpleadoPorNumEmpleadoYContrasenia() {
+        try {
+            System.out.println("obtenerEmpleadoPorNumEmpleadoYContrasenia");
+            int numEmpleado = 1240;
+            String contraseniaSinEncriptar = "EMPLEADO1240";
+            EmpleadoDAO instance = new EmpleadoDAO();
+            Empleado expResult = empleadoTest;
+            Empleado result = instance.obtenerEmpleadoPorNumEmpleadoYContrasenia(numEmpleado, contraseniaSinEncriptar);
+            System.out.println(result.toString());
+            System.out.println(expResult.toString());
             assertEquals(expResult, result);
         } catch (SQLException ex) {
             Logger.getLogger(EmpleadoDAOTest.class.getName()).log(Level.SEVERE, null, ex);

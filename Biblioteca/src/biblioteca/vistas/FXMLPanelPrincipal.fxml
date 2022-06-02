@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="AnchorPane" prefHeight="511.0" prefWidth="573.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.vistas.FXMLPanelPrincipalController">
+   <children>
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="573.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Archivo">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Cerrar sesión" />
+                  <Menu mnemonicParsing="false" text="Unspecified Menu">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                    </items>
+                  </Menu>
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Ayuda">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <GridPane hgap="10.0" layoutX="15.0" layoutY="90.0" prefHeight="360.0" prefWidth="539.0" vgap="10.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="181.0" minHeight="10.0" prefHeight="170.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="124.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Button fx:id="buttonConsultarUsuarios" mnemonicParsing="false" onAction="#llamarConsultarUsuarios" prefHeight="130.0" prefWidth="130.0" text="Consultar usuarios" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button fx:id="buttonRegistrarLibro" mnemonicParsing="false" onAction="#llamarRegistrarLibro" prefHeight="130.0" prefWidth="130.0" text="Registrar libro" GridPane.columnIndex="1" />
+            <Button fx:id="buttonConsultarCatalogoBibliotecario" mnemonicParsing="false" onAction="#llamareConsultarCatalogoBibliotecario" prefHeight="130.0" prefWidth="130.0" text="Consultar catálogo bibliotecario" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button fx:id="buttonRegistrarPrestamos" mnemonicParsing="false" onAction="#llamarRegistrarPrestamos" prefHeight="130.0" prefWidth="130.0" text="Registrar préstamos" />
+            <Button fx:id="buttonConsultarPrestamos" mnemonicParsing="false" onAction="#llamarConsultarPrestamos" prefHeight="130.0" prefWidth="130.0" text="Consultar préstamos" GridPane.rowIndex="1" />
+            <Button fx:id="buttonRegistrarDevolucion" mnemonicParsing="false" onAction="#llamarRegistrarDevolucion" prefHeight="130.0" prefWidth="130.0" text="Registrar devolución" GridPane.rowIndex="2" />
+            <Button fx:id="buttonRegistrarEmpleado" mnemonicParsing="false" onAction="#llamarRegistrarEmpleado" prefHeight="130.0" prefWidth="130.0" text="Registrar empleado" visible="false" GridPane.columnIndex="3" />
+            <Button fx:id="buttonConsultarEmpleados" mnemonicParsing="false" onAction="#llamarConsultarEmpleados" prefHeight="130.0" prefWidth="130.0" text="Consultar empleados" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Button fx:id="buttonConsultarReporteDevolucionesTardias" mnemonicParsing="false" onAction="#llamarConsultarReporteDevolucionesTardias" prefHeight="130.0" prefWidth="130.0" text="Consultar reporte de devoluciones tardías" textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="buttonLlenarFormatoCompraLibros" mnemonicParsing="false" onAction="#llamarLlenarFormatoCompraLibros" prefHeight="130.0" prefWidth="130.0" text="Llenar formato de compra de libros" textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Button fx:id="buttonRegistrarUsuario" mnemonicParsing="false" onAction="#llamarRegistrarUsuario" prefHeight="130.0" prefWidth="130.0" text="Registrar usuario" GridPane.columnIndex="2" />
+            <Button fx:id="buttonReportePrestamos" mnemonicParsing="false" onAction="#llamarConsultarReportePrestamos" prefHeight="130.0" prefWidth="130.0" text="Consultar reporte mensual de préstamos" textAlignment="CENTER" visible="false" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
