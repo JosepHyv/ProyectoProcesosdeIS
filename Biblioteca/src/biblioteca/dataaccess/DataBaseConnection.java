@@ -20,7 +20,7 @@ public class DataBaseConnection {
     }
     public void conectar() throws SQLException {
         try {
-            FileInputStream archivoConfiguracion = new FileInputStream(new File("C:\\Users\\ale71\\ProyectoProcesosdeIS\\Biblioteca\\src\\biblioteca\\dataaccess\\dbconfig.txt"));
+            FileInputStream archivoConfiguracion = new FileInputStream(new File("C:\\Users\\ale71\\proyecto2\\ProyectoProcesosdeIS\\Biblioteca\\src\\biblioteca\\dataaccess\\dbconfig.txt"));
             Properties atributos = new Properties();
             atributos.load(archivoConfiguracion);
             archivoConfiguracion.close();
