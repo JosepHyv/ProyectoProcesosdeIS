@@ -1,20 +1,29 @@
-# En este archivo van todas las cosas que no queremos que se incluyan 
-# cuando hagamos git add . 
-# debajo de esta linea comenzamos con los archivos separados
+#Cambios para solucionar los conflictos en el merge
 
-
-*.log 
 *.a
-*.class
 *.o
-*.jar
-#ignorando el jar de las libs
+*.log 
+*.class
+
+
+#Permitiendo las *.jar de las librerias para conecciones
+
 !/Biblioteca/libs/*.jar
 !/Biblioteca/test/*.jar
-# ahora con las depenendcias
 
-/Biblioteca/*.xml
+
+# ahora con las depenendcias inutiles o innecesarias
+
 /Biblioteca/*.mf
-/Biblioteca/build/
+/Biblioteca/*.xml
 /Biblioteca/dist/
+/Biblioteca/dist/*.*
+/Biblioteca/dist/*.jar
+/Biblioteca/build/
+/Biblioteca/build/*.*
+/Biblioteca/build/*.jar
+/Biblioteca/nbproject/private/private.*
+/Biblioteca/nbproject/project.properties
+
+#en esta ultima linea ignoramos los private que son los principales conflictos
 
