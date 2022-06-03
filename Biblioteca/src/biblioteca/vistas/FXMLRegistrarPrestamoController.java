@@ -4,6 +4,9 @@
  */
 package biblioteca.vistas;
 
+import biblioteca.pojo.Prestamo;
+import biblioteca.pojo.Usuario;
+
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -56,14 +59,26 @@ public class FXMLRegistrarPrestamoController implements Initializable {
     private void btAceptar(ActionEvent event) {
         if(validar())
         {
-            hacerConexion();
-            cerrarVentana();
+            
+        }
+        else
+        {
+            
         }
     }
 
     @FXML
     private void btCancelar(ActionEvent event) {
         cerrarVentana();
+    }
+    
+    private boolean validaFecha(LocalDate fecha)
+    {
+        LocalDate fechaActual = LocalDate.now();
+        boolean ok = true;
+        if(fechaActual.isEqual(fecha) || fechaActual.isAfter(fecha))
+            ok = false;
+        return ok;
     }
     
     private boolean validar()
@@ -73,6 +88,7 @@ public class FXMLRegistrarPrestamoController implements Initializable {
         lbMatricula.setText("");
         lbNombreLibro.setText("");
         lbDomicilio.setText("");
+        lbFecha.setText("");
         
         
         if(data.isEmpty())
@@ -94,7 +110,30 @@ public class FXMLRegistrarPrestamoController implements Initializable {
             lbDomicilio.setText("El campo es obligatorio.");
             ok = false;
         }
+        
+        data = getDate();
+        if(data.isEmpty())
+        {
+            lbFecha.setText("El campo es obligatorio.");
+            ok = false;
+        }
+        else
+        {
+            if(!validaFecha(dpDevolucion.getValue()))
+            {
+                lbFecha.setText("La fecha es Invalida");
+                ok = false;
+            }
+        }
        
+        if(ok)
+        {
+            Prestamo nuevoPrestamo = new Prestamo();
+            nuevoPrestamo.setIdLibro(tfNombreLibro.getText());
+            nuevoPrestamo.setFechaDevolucion(dpDevolucion.getValue());
+            Usuario alquilador = new Usuario();        
+            registrarPrestamo(alquilador, nuevoPrestamo);
+        }
         
         return ok;
     }
