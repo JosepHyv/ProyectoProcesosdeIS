@@ -8,9 +8,13 @@
 *.class
 *.o
 *.jar
+
 #ignorando el jar de las libs
+!/libs/*.jar
+!/test/*.jar
 !/Biblioteca/libs/*.jar
 !/Biblioteca/test/*.jar
+
 # ahora con las depenendcias
 
 /Biblioteca/*.xml
