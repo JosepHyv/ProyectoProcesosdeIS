@@ -23,7 +23,7 @@
 /Biblioteca/build/*.*
 /Biblioteca/build/*.jar
 /Biblioteca/nbproject/private/private.*
-/Biblioteca/nbproject/project.properties
+#/Biblioteca/nbproject/project.properties
 
 #en esta ultima linea ignoramos los private que son los principales conflictos
 
