@@ -286,6 +286,10 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
         this.textFieldRfc.setNombreDelCampo("RFC");
         this.textFieldRfc.setMaximoCaracteres(13);
         this.textFieldRfc.setMinimoCaracteres(13);
+        this.textFieldTelefono1.setNombreDelCampo("Telefono 1");
+        this.textFieldTelefono2.setNombreDelCampo("Telefono 2");
+        this.textFieldTelefono1.setMinimoCaracteres(10);
+        this.textFieldTelefono2.setMinimoCaracteres(10);
         
         this.textFieldNombres.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFABETICOS_TEXTFIELD.getCaracteres());
         this.textFieldApellidoP.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFABETICOS_TEXTFIELD.getCaracteres());

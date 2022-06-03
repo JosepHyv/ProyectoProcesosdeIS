@@ -9,18 +9,13 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" prefHeight="511.0" prefWidth="573.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.vistas.FXMLPanelPrincipalController">
+<AnchorPane id="AnchorPane" prefHeight="511.0" prefWidth="573.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.vistas.FXMLPanelPrincipalController">
    <children>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="573.0">
         <menus>
           <Menu mnemonicParsing="false" text="Archivo">
             <items>
-              <MenuItem mnemonicParsing="false" text="Cerrar sesión" />
-                  <Menu mnemonicParsing="false" text="Unspecified Menu">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                    </items>
-                  </Menu>
+              <MenuItem fx:id="menuCerrarSesion" mnemonicParsing="false" onAction="#confirmarCierreDeSesion" text="Cerrar sesión" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Ayuda">
