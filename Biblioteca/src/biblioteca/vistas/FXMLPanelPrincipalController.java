@@ -22,6 +22,7 @@ import javafx.scene.control.TabPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 /**
  * FXML Controller class
@@ -80,9 +81,11 @@ public class FXMLPanelPrincipalController implements Initializable {
         }
     }    
 
+    
     @FXML
-    private void llamarRegistrarUsuario(ActionEvent event) {
-        System.out.println(InformacionSesion.getInformacionSesion().getGlobalTipoContratacionDelEmpleado());
+    private void llamarRegistrarUsuario(ActionEvent event) throws MalformedURLException {
+        URL url = new File("src/biblioteca/vistas/FXMLRegistroDeUsuario.fxml").toURI().toURL();
+        llamarSubventana("Registrar usuario", url);
     }
 
     @FXML
@@ -91,6 +94,7 @@ public class FXMLPanelPrincipalController implements Initializable {
 
     @FXML
     private void llamarRegistrarLibro(ActionEvent event) {
+        
     }
 
     @FXML
@@ -98,11 +102,14 @@ public class FXMLPanelPrincipalController implements Initializable {
     }
 
     @FXML
-    private void llamarRegistrarPrestamos(ActionEvent event) {
+    private void llamarRegistrarPrestamos(ActionEvent event) throws MalformedURLException {
+        URL url = new File("src/biblioteca/vistas/FXMLRegistrarPrestamo.fxml").toURI().toURL();
+        llamarSubventana("Registrar prestamo", url);
     }
 
     @FXML
     private void llamarConsultarPrestamos(ActionEvent event) {
+        
     }
 
     @FXML
@@ -110,26 +117,9 @@ public class FXMLPanelPrincipalController implements Initializable {
     }
 
     @FXML
-    private void llamarRegistrarEmpleado(ActionEvent event) {
-        Parent root;
-        try {
-            URL url = new File("src/biblioteca/vistas/FXMLRegistroDeEmpleados.fxml").toURI().toURL();
-            FXMLLoader loader = new FXMLLoader(url);
-            root = loader.load();
-            FXMLRegistroDeEmpleadosController controller =
-                loader.getController();
-            Stage subStage = new Stage();
-            Stage stageActual = (Stage)buttonRegistrarEmpleado.getScene().getWindow();
-            subStage.initOwner(stageActual);
-            subStage.initModality(Modality.APPLICATION_MODAL);
-            subStage.setTitle("Dar Empleado de Alta");
-            subStage.setScene(new Scene(root, 700, 650));
-            subStage.showAndWait();
-        } catch (IOException ioException) {
-            Utilidades.mensajeErrorAlCargarLaInformacionDeLaVentana();
-        } catch(IllegalStateException isException){
-            Utilidades.mensajeErrorAlCargarLaInformacionDeLaVentana();
-        }
+    private void llamarRegistrarEmpleado(ActionEvent event) throws MalformedURLException {
+        URL url = new File("src/biblioteca/vistas/FXMLRegistroDeEmpleados.fxml").toURI().toURL();
+        llamarSubventana("Test", url);
     }
 
     @FXML
@@ -152,4 +142,23 @@ public class FXMLPanelPrincipalController implements Initializable {
         this.empleado = empleado;
     }
     
+    private void llamarSubventana(String titulo, URL rutaDeVentana){ 
+        FXMLLoader loader = new FXMLLoader(rutaDeVentana);
+        try {
+            Parent root = loader.load();
+            Scene escenaFormulario = new Scene(root);
+            Stage escenarioFormulario = new Stage();
+            escenarioFormulario.setResizable(false);
+            escenarioFormulario.setScene(escenaFormulario);
+            escenarioFormulario.setTitle(titulo);
+            escenarioFormulario.initModality(Modality.APPLICATION_MODAL);
+            escenarioFormulario.showAndWait();
+        } catch(IOException ioException){
+            ioException.printStackTrace();
+            Utilidades.mensajeErrorAlCargarLaInformacionDeLaVentana();
+        } catch(IllegalStateException isException){
+            Utilidades.mensajeErrorAlCargarLaInformacionDeLaVentana();
+            isException.printStackTrace();
+        }
+    }
 }
