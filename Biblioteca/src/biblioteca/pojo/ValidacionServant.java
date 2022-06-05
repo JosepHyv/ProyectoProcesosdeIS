@@ -45,6 +45,8 @@ public class ValidacionServant {
                 ConstanteCaracteresLegales.ALFANUMERICOS_VALIDACION.getCaracteres());
         validarCaracteres(empleado.getTelefonoEmpleado(), "Teléfono 2", 
                 ConstanteCaracteresLegales.NUMERICOS.getCaracteres());
+        validarCaracteres(empleado.getEmail(),"Email",
+                ConstanteCaracteresLegales.EMAIL.getCaracteres());
     }
     
     public void validarCaracteresEnCamposDelUsuario(Usuario usuario){

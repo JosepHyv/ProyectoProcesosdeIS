@@ -16,6 +16,7 @@ import biblioteca.pojo.constantes.ConstanteTiposDeContratacion;
 import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -35,6 +36,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DateCell;
 
 /**
  * FXML Controller class
@@ -107,12 +109,26 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
             inicializarTextFieldNumEmpleados();
             inicializarComboBoxTipoContratacion();
             limitarTextFields();
-            
+            limitarDatePicker();
         } catch (SQLException sqlException) {
             Utilidades.mensajePerdidaDeConexion();
         } 
     }
 
+    private void limitarDatePicker(){
+        LocalDate fechaActual = LocalDate.now();
+        LocalDate fechaDeNacimientoMinima = fechaActual.minusYears(18);
+        this.datePickerNacimiento.setValue(fechaDeNacimientoMinima);
+        this.datePickerNacimiento.setDayCellFactory(d ->
+           new DateCell() {
+               @Override public void updateItem(LocalDate item, boolean empty) {
+                   super.updateItem(item, empty);
+                   setDisable(item.isAfter(fechaDeNacimientoMinima));
+               }
+           }
+        );
+    }
+    
     private void inicializarTextFieldNumEmpleados() throws SQLException{
         EmpleadoDAO empleadoDAO = new EmpleadoDAO();
         final int NUMERO_DEL_NUEVO_EMPLEADO = empleadoDAO.obtenerNumEmpleadoSiguiente();
