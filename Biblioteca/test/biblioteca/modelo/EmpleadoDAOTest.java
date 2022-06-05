@@ -11,8 +11,8 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertNotEquals;
 //import static org.junit.jupiter.api.Assertions.assertThrows;
 //import org.junit.jupiter.api.Test;
 import org.junit.Test;
@@ -36,6 +36,7 @@ public class EmpleadoDAOTest {
         empleadoTest.setContrasenia(
                 new EncriptadorSHA512().encriptarCadena("EMPLEADOTEST")
         );
+        empleadoTest.setTipoContratacion("Jefe");
     }
 
     /**

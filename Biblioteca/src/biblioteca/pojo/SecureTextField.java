@@ -67,7 +67,8 @@ private int minimoCaracteres;
 
     public void fallarSiFaltanCaracteres() throws IllegalArgumentException{
         if ((this.textField.getText().length()!=this.minimoCaracteres)){
-            throw new IllegalArgumentException("Faltan caracteres en el campo "+this.nombreDelCampo);
+            throw new IllegalArgumentException("Faltan caracteres en el campo "+this.nombreDelCampo+", "
+                    + "deberían ser ("+this.minimoCaracteres+").");
         }
     }
     
@@ -76,5 +77,6 @@ private int minimoCaracteres;
             throw new IllegalArgumentException("No puede dejar ningún campo vacío");
         }
     }
+    
     
 }

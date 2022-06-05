@@ -16,6 +16,7 @@ import biblioteca.pojo.constantes.ConstanteTiposDeContratacion;
 import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -35,6 +36,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DateCell;
 
 /**
  * FXML Controller class
@@ -107,12 +109,26 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
             inicializarTextFieldNumEmpleados();
             inicializarComboBoxTipoContratacion();
             limitarTextFields();
-            
+            limitarDatePicker();
         } catch (SQLException sqlException) {
             Utilidades.mensajePerdidaDeConexion();
         } 
     }
 
+    private void limitarDatePicker(){
+        LocalDate fechaActual = LocalDate.now();
+        LocalDate fechaDeNacimientoMinima = fechaActual.minusYears(18);
+        this.datePickerNacimiento.setValue(fechaDeNacimientoMinima);
+        this.datePickerNacimiento.setDayCellFactory(d ->
+           new DateCell() {
+               @Override public void updateItem(LocalDate item, boolean empty) {
+                   super.updateItem(item, empty);
+                   setDisable(item.isAfter(fechaDeNacimientoMinima));
+               }
+           }
+        );
+    }
+    
     private void inicializarTextFieldNumEmpleados() throws SQLException{
         EmpleadoDAO empleadoDAO = new EmpleadoDAO();
         final int NUMERO_DEL_NUEVO_EMPLEADO = empleadoDAO.obtenerNumEmpleadoSiguiente();
@@ -169,6 +185,7 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
         this.textFieldTelefono1.setText("");
         this.textFieldTelefono2.setText("");
         this.inicializarTextFieldNumEmpleados();
+        this.limitarDatePicker();
     }
     
     private void registrarEmpleado(Empleado nuevoEmpleado) throws SQLException{
@@ -207,6 +224,8 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
         this.textFieldCurp.fallarSiFaltanCaracteres();
         this.textFieldNss.fallarSiFaltanCaracteres();
         this.textFieldRfc.fallarSiFaltanCaracteres();
+        this.textFieldTelefono1.fallarSiFaltanCaracteres();
+        this.textFieldTelefono2.fallarSiFaltanCaracteres();
     }
     
     private Empleado crearNuevoEmpleado(Usuario usuarioDelNuevoEmpleado) 
@@ -219,6 +238,7 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
         nuevoEmpleado.setRfc(this.textFieldRfc.getText());
         nuevoEmpleado.setTelefonoEmpleado(this.textFieldTelefono2.getText());
         nuevoEmpleado.setContrasenia(usuarioDelNuevoEmpleado.getIdUsuario());
+        nuevoEmpleado.setEmail(this.textFieldEmail.getText());
         nuevoEmpleado.setTipoContratacion(
             this.comboBoxTipoContratacion.getSelectionModel().getSelectedItem()
         );
@@ -286,6 +306,10 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
         this.textFieldRfc.setNombreDelCampo("RFC");
         this.textFieldRfc.setMaximoCaracteres(13);
         this.textFieldRfc.setMinimoCaracteres(13);
+        this.textFieldTelefono1.setNombreDelCampo("Telefono 1");
+        this.textFieldTelefono2.setNombreDelCampo("Telefono 2");
+        this.textFieldTelefono1.setMinimoCaracteres(10);
+        this.textFieldTelefono2.setMinimoCaracteres(10);
         
         this.textFieldNombres.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFABETICOS_TEXTFIELD.getCaracteres());
         this.textFieldApellidoP.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFABETICOS_TEXTFIELD.getCaracteres());

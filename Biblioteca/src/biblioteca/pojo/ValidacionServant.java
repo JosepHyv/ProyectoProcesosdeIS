@@ -45,6 +45,8 @@ public class ValidacionServant {
                 ConstanteCaracteresLegales.ALFANUMERICOS_VALIDACION.getCaracteres());
         validarCaracteres(empleado.getTelefonoEmpleado(), "Teléfono 2", 
                 ConstanteCaracteresLegales.NUMERICOS.getCaracteres());
+        validarCaracteres(empleado.getEmail(),"Email",
+                ConstanteCaracteresLegales.EMAIL.getCaracteres());
     }
     
     public void validarCaracteresEnCamposDelUsuario(Usuario usuario){
@@ -118,8 +120,7 @@ public class ValidacionServant {
     (String campo, String nombreCampo, String caracteresAceptados)
     throws IllegalArgumentException{
         if (!campo.matches(caracteresAceptados)){
-            throw new IllegalArgumentException("El campo "+nombreCampo+" contiene caracteres "
-                    + "no permitidos.");
+            throw new IllegalArgumentException("El "+nombreCampo+" ingresado es inválido.");
         }
     }
 }
