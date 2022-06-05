@@ -39,9 +39,9 @@ public class ValidacionServantTest{
     }
     
     @Test
-    public void testValidarCaracteres_Email() {
+    public void testValidarCaracteres_EmailFallo() {
         System.out.println("validarCaracteres_Alfabetico");
-        String campo = "asdf@-fdsa.com";
+        String campo = "ew?qr@fdsa.com";
         System.out.println(campo);
         ValidacionServant instance = new ValidacionServant();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -51,6 +51,59 @@ public class ValidacionServantTest{
                     + "no permitidos.";
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
+    }
+    
+    @Test
+    public void testValidarCaracteres_EmailFallo2() {
+        System.out.println("validarCaracteres_Alfabetico");
+        String campo = "fdsafdsa.com";
+        System.out.println(campo);
+        ValidacionServant instance = new ValidacionServant();
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            instance.validarCaracteres(campo,"Email",ConstanteCaracteresLegales.EMAIL.getCaracteres());
+        });
+        String expectedMessage = "El campo Email contiene caracteres "
+                    + "no permitidos.";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
+    }
+    
+    @Test
+    public void testValidarCaracteres_EmailFallo3() {
+        System.out.println("validarCaracteres_Alfabetico");
+        String campo = "fdsa@fdsa";
+        System.out.println(campo);
+        ValidacionServant instance = new ValidacionServant();
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            instance.validarCaracteres(campo,"Email",ConstanteCaracteresLegales.EMAIL.getCaracteres());
+        });
+        String expectedMessage = "El campo Email contiene caracteres "
+                    + "no permitidos.";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
+    }
+    
+    @Test
+    public void testValidarCaracteres_EmailFallo4() {
+        System.out.println("validarCaracteres_Alfabetico");
+        String campo = "fdsa@.com";
+        System.out.println(campo);
+        ValidacionServant instance = new ValidacionServant();
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            instance.validarCaracteres(campo,"Email",ConstanteCaracteresLegales.EMAIL.getCaracteres());
+        });
+        String expectedMessage = "El campo Email contiene caracteres "
+                    + "no permitidos.";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
+    }
+    
+    @Test
+    public void testValidarCaracteres_Email() {
+        System.out.println("validarCaracteres_Alfabetico");
+        String campo = "e_wqr@fdsa.com";
+        ValidacionServant instance = new ValidacionServant();
+        instance.validarCaracteres(campo,"Email",ConstanteCaracteresLegales.EMAIL.getCaracteres());
     }
     
     @Test

@@ -185,6 +185,7 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
         this.textFieldTelefono1.setText("");
         this.textFieldTelefono2.setText("");
         this.inicializarTextFieldNumEmpleados();
+        this.limitarDatePicker();
     }
     
     private void registrarEmpleado(Empleado nuevoEmpleado) throws SQLException{
@@ -223,6 +224,8 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
         this.textFieldCurp.fallarSiFaltanCaracteres();
         this.textFieldNss.fallarSiFaltanCaracteres();
         this.textFieldRfc.fallarSiFaltanCaracteres();
+        this.textFieldTelefono1.fallarSiFaltanCaracteres();
+        this.textFieldTelefono2.fallarSiFaltanCaracteres();
     }
     
     private Empleado crearNuevoEmpleado(Usuario usuarioDelNuevoEmpleado) 
@@ -235,6 +238,7 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
         nuevoEmpleado.setRfc(this.textFieldRfc.getText());
         nuevoEmpleado.setTelefonoEmpleado(this.textFieldTelefono2.getText());
         nuevoEmpleado.setContrasenia(usuarioDelNuevoEmpleado.getIdUsuario());
+        nuevoEmpleado.setEmail(this.textFieldEmail.getText());
         nuevoEmpleado.setTipoContratacion(
             this.comboBoxTipoContratacion.getSelectionModel().getSelectedItem()
         );

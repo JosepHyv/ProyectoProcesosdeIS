@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +21,8 @@ public class DataBaseConnection {
     }
     public void conectar() throws SQLException {
         try {
-            FileInputStream archivoConfiguracion = new FileInputStream(new File("C:\\Users\\ale71\\proyecto2\\ProyectoProcesosdeIS\\Biblioteca\\src\\biblioteca\\dataaccess\\dbconfig.txt"));
+            URL url = new File("src/biblioteca/dataaccess/dbconfig.txt").toURI().toURL();
+            FileInputStream archivoConfiguracion = new FileInputStream(new File(url.getPath()));
             Properties atributos = new Properties();
             atributos.load(archivoConfiguracion);
             archivoConfiguracion.close();

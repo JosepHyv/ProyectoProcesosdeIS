@@ -120,8 +120,7 @@ public class ValidacionServant {
     (String campo, String nombreCampo, String caracteresAceptados)
     throws IllegalArgumentException{
         if (!campo.matches(caracteresAceptados)){
-            throw new IllegalArgumentException("El campo "+nombreCampo+" contiene caracteres "
-                    + "no permitidos.");
+            throw new IllegalArgumentException("El "+nombreCampo+" ingresado es inválido.");
         }
     }
 }
