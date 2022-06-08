@@ -9,7 +9,9 @@ import biblioteca.dataaccess.DataBaseConnection;
 import biblioteca.modelo.EmpleadoDAO;
 import biblioteca.modelo.UsuarioDAO;
 import biblioteca.pojo.Empleado;
+import biblioteca.pojo.SecureTextField;
 import biblioteca.pojo.Usuario;
+import biblioteca.pojo.constantes.ConstanteCaracteresLegales;
 import biblioteca.pojo.constantes.ConstanteTiposDeContratacion;
 import java.io.File;
 import java.net.URL;
@@ -23,6 +25,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -43,31 +46,31 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
     @FXML
     private ComboBox<String> comboBoxTipoContratacion;
     @FXML
-    private TextField textFieldNombres;
+    private SecureTextField textFieldNombres;
     @FXML
-    private TextField textFieldNss;
+    private SecureTextField textFieldNss;
     @FXML
-    private TextField textFieldApellidoM;
+    private SecureTextField textFieldApellidoM;
     @FXML
-    private TextField textFieldCurp;
+    private SecureTextField textFieldCurp;
     @FXML
-    private TextField textFieldApellidoP;
+    private SecureTextField textFieldApellidoP;
     @FXML
-    private TextField textFieldRfc;
+    private SecureTextField textFieldRfc;
     @FXML
-    private TextField textFieldCalle;
+    private SecureTextField textFieldCalle;
     @FXML
-    private TextField textFieldNumero;
+    private SecureTextField textFieldNumero;
     @FXML
-    private TextField textFieldMunicipio;
+    private SecureTextField textFieldMunicipio;
     @FXML
-    private TextField textFieldColonia;
+    private SecureTextField textFieldColonia;
     @FXML
-    private TextField textFieldEmail;
+    private SecureTextField textFieldEmail;
     @FXML
-    private TextField textFieldTelefono1;
+    private SecureTextField textFieldTelefono1;
     @FXML
-    private TextField textFieldTelefono2;
+    private SecureTextField textFieldTelefono2;
     @FXML
     private Button buttonDarDeAlta;
     @FXML
@@ -76,6 +79,8 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
     private DatePicker datePickerNacimiento;
     @FXML
     private TextField textFieldNumeroEmpleado;
+    @FXML
+    private Group textFieldGroup;
 
     public void start(Stage stage) throws Exception {
         URL url = new File("src/biblioteca/vistas/FXMLRegistroDeEmpleados.fxml").toURI().toURL();
@@ -101,9 +106,11 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
         try {
             inicializarTextFieldNumEmpleados();
             inicializarComboBoxTipoContratacion();
+            limitarTextFields();
+            
         } catch (SQLException sqlException) {
             Utilidades.mensajePerdidaDeConexion();
-        }
+        } 
     }
 
     private void inicializarTextFieldNumEmpleados() throws SQLException{
@@ -115,7 +122,7 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
 
     private void inicializarComboBoxTipoContratacion(){
         ObservableList<String> tiposDeContratacion = FXCollections.observableArrayList(
-            ConstanteTiposDeContratacion.JEFE.getNombresTiposDeContratacion()
+            ConstanteTiposDeContratacion.JEFE.getNombresTiposDeContratacion()        
         );
         this.comboBoxTipoContratacion.setItems(tiposDeContratacion);
     }
@@ -124,20 +131,21 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
     private void darDeAlta(ActionEvent event) {
         try {
             validarCamposLlenos();
+            validarCamposEspecialesLlenos();
+            validarCodigosDeIdentificacion();
             Usuario usuarioDelNuevoEmpleado = crearUsuarioDelNuevoEmpleado();
             Empleado nuevoEmpleado = crearNuevoEmpleado(usuarioDelNuevoEmpleado);
+            
             registrarEmpleado(nuevoEmpleado);
             Utilidades.mostrarAlertaSinConfirmacion(
-                "Aviso", 
-                "La información se ha guardado correctamente",
+                "Aviso", "La información se ha guardado correctamente",
                 Alert.AlertType.INFORMATION);
             terminar();
         }catch (SQLException sqlException) {
             Utilidades.mensajePerdidaDeConexion();            
         } catch (IllegalArgumentException iaException){
             Utilidades.mostrarAlertaConfirmacion(
-                "Aviso", 
-                iaException.getMessage(), 
+                "Aviso", iaException.getMessage(), 
                 Alert.AlertType.WARNING
             );
         }
@@ -171,27 +179,34 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
     }
     
     private void validarCamposLlenos() throws IllegalArgumentException{
+        this.textFieldNombres.fallarSiEstaEnBlanco();
+        this.textFieldApellidoP.fallarSiEstaEnBlanco();
+        this.textFieldApellidoM.fallarSiEstaEnBlanco();
+        this.textFieldCurp.fallarSiEstaEnBlanco();
+        this.textFieldNss.fallarSiEstaEnBlanco();
+        this.textFieldRfc.fallarSiEstaEnBlanco();
+        this.textFieldCalle.fallarSiEstaEnBlanco();
+        this.textFieldNumero.fallarSiEstaEnBlanco();
+        this.textFieldColonia.fallarSiEstaEnBlanco();
+        this.textFieldMunicipio.fallarSiEstaEnBlanco();
+        this.textFieldEmail.fallarSiEstaEnBlanco();
+        this.textFieldTelefono1.fallarSiEstaEnBlanco();
+        this.textFieldTelefono2.fallarSiEstaEnBlanco();
+    }
+    
+    private void validarCamposEspecialesLlenos() throws IllegalArgumentException{
         final boolean TODOS_LOS_CAMPOS_ESTAN_LLENOS=
-            validarCamposDeTextoLlenos(this.textFieldNombres.getText())
-            && validarCamposDeTextoLlenos(this.textFieldNombres.getText())
-            && validarCamposDeTextoLlenos(this.textFieldApellidoP.getText())
-            && validarCamposDeTextoLlenos(this.textFieldApellidoM.getText())
-            && validarCamposDeTextoLlenos(this.textFieldCalle.getText())
-            && validarCamposDeTextoLlenos(this.textFieldNumero.getText())
-            && validarCamposDeTextoLlenos(this.textFieldColonia.getText())
-            && validarCamposDeTextoLlenos(this.textFieldMunicipio.getText())
-            && validarCamposDeTextoLlenos(this.textFieldEmail.getText())
-            && validarCamposDeTextoLlenos(this.textFieldTelefono1.getText())
-            && validarCamposDeTextoLlenos(this.textFieldTelefono2.getText())
-            && this.datePickerNacimiento.getValue()!=null
+            this.datePickerNacimiento.getValue()!=null
             && !this.comboBoxTipoContratacion.getSelectionModel().isEmpty();
         if (TODOS_LOS_CAMPOS_ESTAN_LLENOS==false){
             throw new IllegalArgumentException("No puede dejar ningún campo vacío.");
         }
     }
     
-    private boolean validarCamposDeTextoLlenos(String cadenaEnElCampo){
-        return (cadenaEnElCampo.trim().length() > 0);
+    private void validarCodigosDeIdentificacion() throws IllegalArgumentException{
+        this.textFieldCurp.fallarSiFaltanCaracteres();
+        this.textFieldNss.fallarSiFaltanCaracteres();
+        this.textFieldRfc.fallarSiFaltanCaracteres();
     }
     
     private Empleado crearNuevoEmpleado(Usuario usuarioDelNuevoEmpleado) 
@@ -236,8 +251,7 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
     @FXML
     private void cancelar(ActionEvent event) {
         Utilidades.mostrarAlertaConfirmacion(
-            "Cancelar operación", 
-            "¿Está seguro de que desea cancelar la operación?", 
+            "Cancelar operación", "¿Está seguro de que desea cancelar la operación?", 
             Alert.AlertType.CONFIRMATION);
         boolean confirmarCancelacion =
             Utilidades.getOption().orElse(ButtonType.CANCEL).getButtonData().isDefaultButton();
@@ -251,6 +265,40 @@ public class FXMLRegistroDeEmpleadosController extends Application implements In
         }
     }
     
-    
+    private void limitarTextFields(){
+        this.textFieldNombres.setMaximoCaracteres(50);
+        this.textFieldApellidoP.setMaximoCaracteres(50);
+        this.textFieldApellidoM.setMaximoCaracteres(50);
+        this.textFieldCalle.setMaximoCaracteres(100);
+        this.textFieldNumero.setMaximoCaracteres(20);
+        this.textFieldColonia.setMaximoCaracteres(50);
+        this.textFieldMunicipio.setMaximoCaracteres(50);
+        this.textFieldEmail.setMaximoCaracteres(200);
+        this.textFieldTelefono1.setMaximoCaracteres(10);
+        this.textFieldTelefono2.setMaximoCaracteres(10);
+        
+        this.textFieldCurp.setNombreDelCampo("CURP");
+        this.textFieldCurp.setMaximoCaracteres(18);
+        this.textFieldCurp.setMinimoCaracteres(18);
+        this.textFieldNss.setNombreDelCampo("NSS");
+        this.textFieldNss.setMaximoCaracteres(11);
+        this.textFieldNss.setMinimoCaracteres(11);
+        this.textFieldRfc.setNombreDelCampo("RFC");
+        this.textFieldRfc.setMaximoCaracteres(13);
+        this.textFieldRfc.setMinimoCaracteres(13);
+        
+        this.textFieldNombres.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFABETICOS_TEXTFIELD.getCaracteres());
+        this.textFieldApellidoP.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFABETICOS_TEXTFIELD.getCaracteres());
+        this.textFieldApellidoM.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFABETICOS_TEXTFIELD.getCaracteres());
+        this.textFieldCalle.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFANUMERICOS_TEXTFIELD.getCaracteres());
+        this.textFieldNumero.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFANUMERICOS_TEXTFIELD.getCaracteres());
+        this.textFieldColonia.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFANUMERICOS_TEXTFIELD.getCaracteres());
+        this.textFieldMunicipio.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFANUMERICOS_TEXTFIELD.getCaracteres());
+        this.textFieldTelefono1.setCaracteresPermitidos(ConstanteCaracteresLegales.NUMERICOS.getCaracteres());
+        this.textFieldTelefono2.setCaracteresPermitidos(ConstanteCaracteresLegales.NUMERICOS.getCaracteres());
+        this.textFieldCurp.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFANUMERICOS_TEXTFIELD.getCaracteres());
+        this.textFieldNss.setCaracteresPermitidos(ConstanteCaracteresLegales.NUMERICOS.getCaracteres());
+        this.textFieldRfc.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFANUMERICOS_TEXTFIELD.getCaracteres());
+    }    
     
 }

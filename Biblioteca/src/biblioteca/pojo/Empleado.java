@@ -29,7 +29,7 @@ public class Empleado extends Usuario implements Validable{
         this.nss="sinNSS";
         this.curp="sinCURP";
         this.rfc="sinRFC";
-        this.telefonoEmpleado="sinTelefonoEmpleado";
+        this.telefonoEmpleado="123";
         this.contrasenia="sinContrasenia";
         this.tipoContratacion="sinTipoContratacion";
         this.usuario= new Usuario();
