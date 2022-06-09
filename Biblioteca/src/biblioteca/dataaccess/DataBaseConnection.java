@@ -8,6 +8,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path; // for general dir on any operating systems :3 my english is so bad :(
+import java.nio.file.Paths; // same thing :3
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +23,13 @@ public class DataBaseConnection {
     }
     public void conectar() throws SQLException {
         try {
-            URL url = new File("src/biblioteca/dataaccess/dbconfig.txt").toURI().toURL();
+            // usando directorios  generales for win ||  unix like systems
+            
+            Path CURRENT_FILE = Paths.get("");
+            String directory = CURRENT_FILE.toAbsolutePath().toString();
+            directory = Paths.get(directory, "src" , "biblioteca" , "dataaccess" , "dbconfig.txt").toString();
+            System.err.println("File directory is " + directory); // err for debbug
+            URL url = new File(directory).toURI().toURL();
             FileInputStream archivoConfiguracion = new FileInputStream(new File(url.getPath()));
             Properties atributos = new Properties();
             atributos.load(archivoConfiguracion);
