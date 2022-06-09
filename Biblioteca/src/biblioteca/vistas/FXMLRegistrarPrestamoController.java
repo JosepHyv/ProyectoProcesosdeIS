@@ -56,7 +56,11 @@ public class FXMLRegistrarPrestamoController implements Initializable {
     private void btAceptar(ActionEvent event) {
         if(validar())
         {
+<<<<<<< HEAD
          //   hacerConexion();
+=======
+            //hacerConexion();
+>>>>>>> bcfe40eda3cf7ec5daac567a2e6f04002aedf931
             cerrarVentana();
         }
     }

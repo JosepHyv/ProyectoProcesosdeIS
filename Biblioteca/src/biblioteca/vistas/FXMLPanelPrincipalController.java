@@ -23,6 +23,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import javafx.scene.control.MenuItem;
 
 /**
  * FXML Controller class
@@ -55,19 +56,14 @@ public class FXMLPanelPrincipalController implements Initializable {
     private Button buttonConsultarReporteDevolucionesTardias;
     @FXML
     private Button buttonLlenarFormatoCompraLibros;
-
-    private Empleado empleado;
     @FXML
-    private Tab TabPanelAdministrativo;
-    @FXML
-    private TabPane tabPanelPanelPrincipal;
+    private MenuItem menuCerrarSesion;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         final String TIPO_CONTRATACION_EMPLEADO = 
                 InformacionSesion.getInformacionSesion().getGlobalTipoContratacionDelEmpleado();
         final String TIPO_CONTRATACION_JEFE = "Jefe";
@@ -77,7 +73,6 @@ public class FXMLPanelPrincipalController implements Initializable {
             this.buttonConsultarReporteDevolucionesTardias.setVisible(true);
             this.buttonLlenarFormatoCompraLibros.setVisible(true);
             this.buttonReportePrestamos.setVisible(true);
-            //this.tabPanelPanelPrincipal.getTabs().remove(TabPanelAdministrativo);
         }
     }    
 
@@ -119,7 +114,7 @@ public class FXMLPanelPrincipalController implements Initializable {
     @FXML
     private void llamarRegistrarEmpleado(ActionEvent event) throws MalformedURLException {
         URL url = new File("src/biblioteca/vistas/FXMLRegistroDeEmpleados.fxml").toURI().toURL();
-        llamarSubventana("Test", url);
+        llamarSubventana("Registro de Empleados", url);
     }
 
     @FXML
@@ -136,10 +131,6 @@ public class FXMLPanelPrincipalController implements Initializable {
 
     @FXML
     private void llamarLlenarFormatoCompraLibros(ActionEvent event) {
-    }
-    
-    public void setEmpleado(Empleado empleado){
-        this.empleado = empleado;
     }
     
     private void llamarSubventana(String titulo, URL rutaDeVentana){ 
@@ -160,5 +151,9 @@ public class FXMLPanelPrincipalController implements Initializable {
             Utilidades.mensajeErrorAlCargarLaInformacionDeLaVentana();
             isException.printStackTrace();
         }
+    }
+
+    @FXML
+    private void confirmarCierreDeSesion(ActionEvent event) {
     }
 }
