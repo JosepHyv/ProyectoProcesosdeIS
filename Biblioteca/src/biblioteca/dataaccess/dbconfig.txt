@@ -1,3 +1,3 @@
 DireccionBD = jdbc:mysql://masterofsoftware.mysql.database.azure.com/biblioteca
 Usuario = admin
-Contrasenia =  turbocontrasenia123
+Contrasenia = turbocontrasenia123
