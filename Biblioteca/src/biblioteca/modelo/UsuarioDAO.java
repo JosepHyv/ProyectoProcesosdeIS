@@ -64,5 +64,38 @@ public class UsuarioDAO {
         return verificacionExistencia;
     }
     
+    public Usuario getUsuarioPorId(String idUsuario) throws SQLException
+    {
+        Usuario usuarioEncontrado = new Usuario();
+        String consulta = "SELECT * " + 
+        "FROM usuarios "+
+        "WHERE idUsuario = ?";
+        DataBaseConnection db = new DataBaseConnection();
+        try(Connection conexion = db.getConexion())
+        {
+            PreparedStatement sentencia = conexion.prepareStatement(consulta);
+            sentencia.setString(1,idUsuario);
+            ResultSet resultado = sentencia.executeQuery();
+            if(resultado.next())
+            {
+                usuarioEncontrado.setIdUsuario(idUsuario);
+                usuarioEncontrado.setNombre(resultado.getString("nombres"));
+                usuarioEncontrado.setCalle(resultado.getString("calle")); 
+                usuarioEncontrado.setNumero(resultado.getString("numero"));
+                usuarioEncontrado.setColonia(resultado.getString("colonia"));
+                usuarioEncontrado.setMunicipio(resultado.getString("municipio"));
+                usuarioEncontrado.setEmail(resultado.getString("email"));
+                usuarioEncontrado.setTelefono(resultado.getString("telefono"));
+                usuarioEncontrado.setTipoUsuario(resultado.getString("tipoUsuario"));
+            }   
+        }
+        finally
+        {
+            db.desconectar();
+        }
+        
+        return usuarioEncontrado;
+    }
+    
     
 }
