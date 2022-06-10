@@ -6,32 +6,36 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import biblioteca.pojo.SecureTextField?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biblioteca.vistas.FXMLRegistroDeUsuarioController">
    <children>
       <Text layoutX="41.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombres(s):" />
-      <TextField fx:id="tfNombre" layoutX="120.0" layoutY="104.0" prefHeight="25.0" prefWidth="168.0" />
+      <SecureTextField fx:id="tfNombre" layoutX="120.0" layoutY="104.0" prefHeight="25.0" prefWidth="168.0" />
       <Text layoutX="41.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Apellido Paterno:" />
-      <TextField fx:id="tfApellidoPaterno" layoutX="152.0" layoutY="151.0" prefHeight="25.0" prefWidth="137.0" />
+      <SecureTextField fx:id="tfApellidoPaterno" layoutX="152.0" layoutY="151.0" prefHeight="25.0" prefWidth="137.0" />
       <Text layoutX="41.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Apellido Materno:" />
-      <TextField fx:id="tfApellidoMaterno" layoutX="152.0" layoutY="201.0" prefHeight="25.0" prefWidth="137.0" />
+      <SecureTextField fx:id="tfApellidoMaterno" layoutX="152.0" layoutY="201.0" prefHeight="25.0" prefWidth="137.0" />
       <Text layoutX="41.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Correo Electronico:" />
-      <TextField fx:id="tfCorreoElectronico" layoutX="152.0" layoutY="253.0" prefHeight="25.0" prefWidth="137.0" />
-      <Text layoutX="41.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numero Telefonico:" />
-      <TextField fx:id="tfNumeroTelefonico" layoutX="152.0" layoutY="303.0" prefHeight="25.0" prefWidth="137.0" />
-      <ComboBox fx:id="cbTipoUsuario" layoutX="436.0" layoutY="96.0" prefHeight="25.0" prefWidth="112.0" />
+      <SecureTextField fx:id="tfCorreoElectronico" layoutX="152.0" layoutY="253.0" prefHeight="25.0" prefWidth="76.0" />
+      <Text layoutX="41.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Número Telefonico:" />
+      <SecureTextField fx:id="tfNumeroTelefonico" layoutX="152.0" layoutY="303.0" prefHeight="25.0" prefWidth="137.0" />
+      <ComboBox fx:id="comboBoxTipoUsuario" layoutX="436.0" layoutY="96.0" prefHeight="25.0" prefWidth="112.0" promptText="Tipo" />
       <Text layoutX="332.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de Usuario:" />
       <Text layoutX="332.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Calle:" />
-      <TextField fx:id="tfCalle" layoutX="389.0" layoutY="143.0" prefHeight="25.0" prefWidth="168.0" />
+      <SecureTextField fx:id="tfCalle" layoutX="389.0" layoutY="143.0" prefHeight="25.0" prefWidth="168.0" />
       <Text layoutX="332.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numero de Domicilio:" />
-      <TextField layoutX="458.0" layoutY="189.0" prefHeight="25.0" prefWidth="70.0" />
+      <SecureTextField fx:id="tfNumeroDeDomicilio" layoutX="458.0" layoutY="189.0" prefHeight="25.0" prefWidth="70.0" />
       <Text layoutX="333.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Municipio:" />
-      <Text layoutX="332.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Colonia:" />
-      <TextField fx:id="tfMunicipio" layoutX="404.0" layoutY="232.0" />
-      <TextField fx:id="tfColonia" layoutX="405.0" layoutY="278.0" />
-      <Button layoutX="505.0" layoutY="350.0" mnemonicParsing="false" onAction="#btnContinuar" text="Continuar" />
-      <Button layoutX="413.0" layoutY="350.0" mnemonicParsing="false" onAction="#btnCancelar" text="Cancelar" />
+      <Text layoutX="332.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Colonia:" />
+      <SecureTextField fx:id="tfMunicipio" layoutX="404.0" layoutY="232.0" />
+      <SecureTextField fx:id="tfColonia" layoutX="405.0" layoutY="270.0" />
+      <SecureTextField fx:id="tfIdentificador" layoutX="405.0" layoutY="311.0" />
+      <Button fx:id="btnContinuar" layoutX="505.0" layoutY="350.0" mnemonicParsing="false" onAction="#btnContinuar" text="Continuar" />
+      <Button fx:id="btnCancelar" layoutX="413.0" layoutY="350.0" mnemonicParsing="false" onAction="#btnCancelar" text="Cancelar" />
       <Text layoutX="140.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingrese los datos solicitados para la creacion de este usuario" />
-      <Label fx:id="lbErrorCampos" layoutX="171.0" layoutY="56.0" prefHeight="17.0" prefWidth="258.0" textFill="RED" />
+      <Label fx:id="lbErrorCampos" layoutX="94.0" layoutY="62.0" prefHeight="17.0" prefWidth="413.0" textAlignment="CENTER" textFill="RED" />
+      <Text layoutX="332.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Identificador:" />
+      <Text layoutX="233.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\@escuela.com" />
    </children>
 </AnchorPane>
