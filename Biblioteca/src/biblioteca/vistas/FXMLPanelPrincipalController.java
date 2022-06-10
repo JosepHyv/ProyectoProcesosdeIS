@@ -78,9 +78,27 @@ public class FXMLPanelPrincipalController implements Initializable {
 
     
     @FXML
-    private void llamarRegistrarUsuario(ActionEvent event) throws MalformedURLException {
-        URL url = new File("src/biblioteca/vistas/FXMLRegistroDeUsuario.fxml").toURI().toURL();
-        llamarSubventana("Registrar usuario", url);
+    private void llamarRegistrarUsuario(ActionEvent event) {
+        System.out.println(InformacionSesion.getInformacionSesion().getGlobalTipoContratacionDelEmpleado());
+        Parent root;
+        try {
+            URL url = new File("src/biblioteca/vistas/FXMLRegistroDeUsuario.fxml").toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(url);
+            root = loader.load();
+            FXMLRegistroDeUsuarioController controller =
+                loader.getController();
+            Stage subStage = new Stage();
+            Stage stageActual = (Stage)buttonRegistrarUsuario.getScene().getWindow();
+            subStage.initOwner(stageActual);
+            subStage.initModality(Modality.APPLICATION_MODAL);
+            subStage.setTitle("Dar Usuario de Alta");
+            subStage.setScene(new Scene(root, 620, 400));
+            subStage.showAndWait();
+        } catch (IOException ioException) {
+            Utilidades.mensajeErrorAlCargarLaInformacionDeLaVentana();
+        } catch(IllegalStateException isException){
+            Utilidades.mensajeErrorAlCargarLaInformacionDeLaVentana();
+        }
     }
 
     @FXML
