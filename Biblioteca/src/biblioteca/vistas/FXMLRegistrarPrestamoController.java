@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package biblioteca.vistas;
 
 import java.net.URL;
@@ -16,10 +12,21 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.time.DayOfWeek;
 import java.time.temporal.ChronoField;
 import javafx.scene.control.ButtonType;
+
+//pojos (pollos :p)
+import biblioteca.pojo.Usuario;
+import biblioteca.pojo.Prestamo;
+
+//Daos (conectores a la BD :p)
+import biblioteca.modelo.UsuarioDAO;
+import biblioteca.modelo.PrestamoDAO;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -71,15 +78,6 @@ public class FXMLRegistrarPrestamoController implements Initializable {
             Utilidades.mostrarAlertaSinConfirmacion("Error", "Los Campos estan vacios o son inforrectos\nfavor deverificar", Alert.AlertType.ERROR);
     }
     
-    private void cerrarVentana(boolean option)
-    {
-        if(option)
-        {
-            Stage stage = (Stage) btCancelar.getScene().getWindow();
-            stage.close();
-        }
-    }
-
     @FXML
     private void optCancelar(ActionEvent event) {
         Utilidades.mostrarAlertaConfirmacion(
@@ -89,6 +87,44 @@ public class FXMLRegistrarPrestamoController implements Initializable {
         boolean option = Utilidades.getOption().orElse(ButtonType.CANCEL).getButtonData().isDefaultButton();
         cerrarVentana(option);
         
+    }
+    
+    @FXML
+    private void findDataDomicilio(MouseEvent event) {
+        tfDomicilio.setText("");
+        Usuario persona = new Usuario();
+        UsuarioDAO connect = new UsuarioDAO();
+        String idUsuario = tfMatricula.getText();
+        try {
+            if (connect.encontrarUsuarioPorIdUsuario(idUsuario)) {
+                //for debbug
+                System.out.println("Encontre un usuario");
+                System.out.println("Encontre a: " + idUsuario);
+                persona = connect.getUsuarioPorId(idUsuario);
+                String domicilioUsuario = "";
+                domicilioUsuario = persona.getCalle()
+                        + " " + persona.getNumero()
+                        + " " + persona.getColonia()
+                        + " " + persona.getMunicipio();
+                tfDomicilio.setText(domicilioUsuario);
+                
+            } else {
+                System.out.println("No encontre a: " + idUsuario);
+            }
+        } catch (SQLException ex) {
+            Utilidades.mensajePerdidaDeConexion();
+        }
+
+    }
+    
+        
+    private void cerrarVentana(boolean option)
+    {
+        if(option)
+        {
+            Stage stage = (Stage) btCancelar.getScene().getWindow();
+            stage.close();
+        }
     }
     
     private boolean validarFecha(LocalDate fecha)
@@ -162,9 +198,6 @@ public class FXMLRegistrarPrestamoController implements Initializable {
             ok = false;
             lbDomicilio.setText(MESSAGE);
         }
-        
-      
-        
             
         LocalDate dateOfdp = dpDevolucion.getValue();
         if(dateOfdp == null)
@@ -172,10 +205,18 @@ public class FXMLRegistrarPrestamoController implements Initializable {
             ok = false;
             lbFecha.setText("Debe ingresar una fecha valida.");
         }
-        else ok = validarFecha(dateOfdp);
+        else ok = validarFecha(dateOfdp) && ok ;
         
-        System.out.println("La fecha que tiene es: " + dateOfdp);
         
+        //verfica si el usuario existe
+        //que chafa es java, lo mejor era 
+        // tfMatricula.getText().length() && tfDomicilio.getText().isEmpty()
+        if(!tfMatricula.getText().isEmpty()  && tfDomicilio.getText().isEmpty())
+        {
+            ok = false;
+            lbDomicilio.setText("El usuario no existe");
+        }
+         
         return ok; //ok && validarFecha(dpDevolucion.getValue());        
     }
     
@@ -191,7 +232,7 @@ public class FXMLRegistrarPrestamoController implements Initializable {
         if(dias < 1 || dias < this.MIN_DIAS) this.MAX_DIAS = 7;
         else this.MAX_DIAS = dias;
     }
+
     
-   
     
 }
