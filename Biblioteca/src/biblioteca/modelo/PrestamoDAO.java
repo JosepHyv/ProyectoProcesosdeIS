@@ -20,8 +20,8 @@ import java.sql.SQLException;
 public class PrestamoDAO {
     public boolean registrarPrestamo(Prestamo prestamoNuevo) throws SQLException{
         String consulta = 
-        " INSERT INTO Prestamo "
-        +"(idPrestamo,fechaPrestamo,fechaDevolucion,idUsuario,idLibro) "
+        " INSERT INTO prestamo "
+        +"(idPrestamo,fehaPrestamo,fechaDevolucion,idUsuario,idLibro) "
         +"values (?,?,?,?,?);";
         boolean verificacionRegistro = false;
         DataBaseConnection db = new DataBaseConnection();
@@ -31,12 +31,32 @@ public class PrestamoDAO {
             sentencia.setDate(2,java.sql.Date.valueOf(prestamoNuevo.getFechaPrestamo()));
             sentencia.setDate(3,java.sql.Date.valueOf(prestamoNuevo.getFechaDevolucion()));
             sentencia.setString(4,prestamoNuevo.getIdUsuario());
-            sentencia.setString(5,prestamoNuevo.getIdLibro());
+            sentencia.setInt(5,prestamoNuevo.getIdLibro());
             verificacionRegistro = sentencia.executeUpdate()!=0;
+            //System.out.println("Se establecio la conexion");
         }finally{
             db.desconectar();
         }
         return verificacionRegistro;
+    }
+    
+    public int getLastIdPrestamo() throws SQLException
+    {
+        String consulta = "select max(idPrestamo) as lastP from prestamo";
+        int lastId;
+        DataBaseConnection db = new DataBaseConnection();
+        try(Connection conexion = db.getConexion()){
+            PreparedStatement sentencia = conexion.prepareStatement(consulta);
+            ResultSet resultado = sentencia.executeQuery();
+            //System.out.println("En el getLastid DAO " + resultado.next());
+            if(!resultado.next())
+                lastId = 1;
+            else lastId = resultado.getInt("lastP") + 1;
+            
+        }finally{
+            db.desconectar();
+        }
+        return lastId;
     }
     
    
