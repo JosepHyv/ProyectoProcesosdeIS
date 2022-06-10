@@ -78,6 +78,7 @@ public class UsuarioDAO {
             ResultSet resultado = sentencia.executeQuery();
             if(resultado.next())
             {
+                //creando usuario POJO
                 usuarioEncontrado.setIdUsuario(idUsuario);
                 usuarioEncontrado.setNombre(resultado.getString("nombres"));
                 usuarioEncontrado.setCalle(resultado.getString("calle")); 

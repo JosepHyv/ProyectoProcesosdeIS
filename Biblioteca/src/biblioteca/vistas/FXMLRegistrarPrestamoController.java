@@ -107,6 +107,7 @@ public class FXMLRegistrarPrestamoController implements Initializable {
                         + " " + persona.getColonia()
                         + " " + persona.getMunicipio();
                 tfDomicilio.setText(domicilioUsuario);
+                
             } else {
                 System.out.println("No encontre a: " + idUsuario);
             }
