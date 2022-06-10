@@ -17,13 +17,13 @@ public class Prestamo extends Usuario implements Validable{
     private LocalDate fechaPrestamo;
     private LocalDate fechaDevolucion;
     private String idUsuario;
-    private String idLibro;
+    private int  idLibro;
  
     public Prestamo() {
         this.idPrestamo=0;
         this.fechaPrestamo=LocalDate.now();
         this.idUsuario = "empty";
-        this.idLibro = "empty";
+        this.idLibro = 0;
     }
 
     public int getIdPrestamo() {
@@ -45,9 +45,9 @@ public class Prestamo extends Usuario implements Validable{
     {
         return idUsuario;
     }
-    public String getIdLibro()
+    public int getIdLibro()
     {
-        return idLibro;
+        return this.idLibro;
     }
     
     
@@ -62,7 +62,7 @@ public class Prestamo extends Usuario implements Validable{
         this.idUsuario = id;
     }
     
-    public void setIdLibro(String id)
+    public void setIdLibro(int id)
     {
         this.idLibro = id;
     }
@@ -84,7 +84,7 @@ public class Prestamo extends Usuario implements Validable{
 
     @Override
     public boolean equals(Object objeto) {
-        boolean isEquals=false;
+        boolean isEquals = false;
         if (objeto == this) {
             isEquals=true;
         }
@@ -92,9 +92,9 @@ public class Prestamo extends Usuario implements Validable{
             Prestamo otro = (Prestamo) objeto;
             isEquals=
                 super.equals(objeto) &&
-                this.idPrestamo==otro.idPrestamo && 
+                this.idPrestamo == otro.idPrestamo && 
                 this.idUsuario.equals(otro.idUsuario)  && 
-                this.idLibro.equals(otro.idLibro);
+                this.idLibro == otro.idLibro;
         }
         return isEquals;
     }

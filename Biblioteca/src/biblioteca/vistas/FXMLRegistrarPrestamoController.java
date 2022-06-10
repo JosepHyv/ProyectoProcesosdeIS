@@ -19,10 +19,12 @@ import javafx.scene.control.ButtonType;
 //pojos (pollos :p)
 import biblioteca.pojo.Usuario;
 import biblioteca.pojo.Prestamo;
+import biblioteca.pojo.Libro;
 
 //Daos (conectores a la BD :p)
 import biblioteca.modelo.UsuarioDAO;
 import biblioteca.modelo.PrestamoDAO;
+import biblioteca.modelo.LibroDAO;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -66,14 +68,55 @@ public class FXMLRegistrarPrestamoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        LocalDate nuevaFecha = this.CURRENT_DATE.plusDays(1);
+        LocalDate nuevaFecha = this.CURRENT_DATE.plusDays(this.MIN_DIAS);
         dpDevolucion.setValue(nuevaFecha);
     }    
 
     @FXML
     private void btAceptar(ActionEvent event) {
         if(validarCampos())
-            Utilidades.mostrarAlertaSinConfirmacion("Aviso", "Las cosas funcionan :3", Alert.AlertType.INFORMATION);
+        {   
+            boolean  registroNuevo = true;
+            try
+            {
+                LibroDAO conexionLibro = new LibroDAO();
+                PrestamoDAO conexionPrestamo = new PrestamoDAO();
+                UsuarioDAO conexionUsuario = new UsuarioDAO();
+                
+                //System.out.println("Intentando recuperar el libro " + tfNombreLibro.getText());
+                //System.out.println(split(tfNombreLibro.getText()));
+                Libro librito = conexionLibro.getLibroPorNombre(tfNombreLibro.getText());
+                //System.out.println("Intentando recuperar el Usuario " + tfMatricula.getText());
+                Usuario usuarioChido = conexionUsuario.getUsuarioPorId(tfMatricula.getText());
+                
+                //System.out.println("Pase la conexion de libros y de usuarios");
+                
+                Prestamo nuevoPrestamo = new Prestamo();
+                nuevoPrestamo.setIdPrestamo(conexionPrestamo.getLastIdPrestamo());
+                //System.out.println("pase el getLastIde " + nuevoPrestamo.getIdPrestamo());
+                nuevoPrestamo.setFechaPrestamo(CURRENT_DATE);
+                nuevoPrestamo.setFechaDevolucion(dpDevolucion.getValue());
+                nuevoPrestamo.setIdUsuario(usuarioChido.getIdUsuario());
+                nuevoPrestamo.setIdLibro(librito.getIdLibro());
+                
+                //System.out.println("Prestamo id usuario " + nuevoPrestamo.getIdUsuario());
+                //System.out.println("Prestamo id libro " + nuevoPrestamo.getIdLibro());
+                
+                conexionPrestamo.registrarPrestamo(nuevoPrestamo);
+                //System.out.println("En el prestamo la conexion regreso: " + temp);
+            }
+            catch (SQLException ex) 
+            {
+                System.out.println(ex.getMessage());
+                registroNuevo = false;
+                Utilidades.mostrarAlertaConfirmacion("Error", "Ocurrio un error al registrar el prestamo", Alert.AlertType.ERROR);
+            }
+            if(registroNuevo)
+            {
+                Utilidades.mostrarAlertaSinConfirmacion("Aviso", "Prestamo Otorgado :3", Alert.AlertType.INFORMATION);
+                limpiarVentana();
+            }
+        }
         else
             Utilidades.mostrarAlertaSinConfirmacion("Error", "Los Campos estan vacios o son inforrectos\nfavor deverificar", Alert.AlertType.ERROR);
     }
@@ -98,8 +141,8 @@ public class FXMLRegistrarPrestamoController implements Initializable {
         try {
             if (connect.encontrarUsuarioPorIdUsuario(idUsuario)) {
                 //for debbug
-                System.out.println("Encontre un usuario");
-                System.out.println("Encontre a: " + idUsuario);
+                //System.out.println("Encontre un usuario");
+                //System.out.println("Encontre a: " + idUsuario);
                 persona = connect.getUsuarioPorId(idUsuario);
                 String domicilioUsuario = "";
                 domicilioUsuario = persona.getCalle()
@@ -109,9 +152,10 @@ public class FXMLRegistrarPrestamoController implements Initializable {
                 tfDomicilio.setText(domicilioUsuario);
                 
             } else {
-                System.out.println("No encontre a: " + idUsuario);
+                //System.out.println("No encontre a: " + idUsuario);
             }
         } catch (SQLException ex) {
+            
             Utilidades.mensajePerdidaDeConexion();
         }
 
@@ -169,6 +213,31 @@ public class FXMLRegistrarPrestamoController implements Initializable {
         return ok;
     }
     
+    private boolean validarNombreLibro()
+    {
+        lbNombreLibro.setText("");
+        boolean ok = true;
+        String nombreLibro = split(tfNombreLibro.getText());
+        LibroDAO connect = new LibroDAO();
+        try 
+        {
+            if(!connect.encontrarLibroPorNombre(nombreLibro))
+            {
+                ok = false;
+                lbNombreLibro.setText("El libro no existe");
+                Utilidades.mostrarAlertaConfirmacion(
+                            "Error", 
+                            "El libro " + tfNombreLibro.getText() + "\n no existe" , Alert.AlertType.ERROR);
+            }
+        } catch (SQLException ex) {
+            ok = false;
+            Utilidades.mensajePerdidaDeConexion();
+            
+        }
+            
+        return ok;
+    }
+    
     private boolean validarCampos()
     {
         boolean ok = true;
@@ -216,7 +285,9 @@ public class FXMLRegistrarPrestamoController implements Initializable {
             ok = false;
             lbDomicilio.setText("El usuario no existe");
         }
-         
+        
+        ok = ok && validarNombreLibro();
+        
         return ok; //ok && validarFecha(dpDevolucion.getValue());        
     }
     
@@ -233,6 +304,27 @@ public class FXMLRegistrarPrestamoController implements Initializable {
         else this.MAX_DIAS = dias;
     }
 
+    public String split(String line)
+    {
+        int pos = 0 ;
+        int pos2 = line.length() -1;
+        while(pos2 > pos && line.charAt(pos2) == ' ') pos2--;
+        while(pos < pos2 && line.charAt(pos) == ' ') pos++;
+        
+        String ans = line.substring(pos, pos2+1);
+     //   System.out.println(ans);
+        return ans;
+    }
     
-    
+    public void limpiarVentana()
+    {
+        this.tfDomicilio.setText("");
+        this.tfMatricula.setText("");
+        this.dpDevolucion.setValue(CURRENT_DATE.plusDays(this.MIN_DIAS));
+        this.tfNombreLibro.setText("");
+        this.lbDomicilio.setText("");
+        this.lbFecha.setText("");
+        this.lbMatricula.setText("");
+        
+    }
 }
