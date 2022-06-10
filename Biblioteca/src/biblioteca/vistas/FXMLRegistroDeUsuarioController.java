@@ -132,5 +132,5 @@ public class FXMLRegistroDeUsuarioController implements Initializable {
         System.out.println("Usted ha salido de la ventana de registro :0");
         //Aqui irá lo de volver al menu principal
     }
-
+    
 }
