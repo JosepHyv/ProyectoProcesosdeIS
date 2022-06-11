@@ -96,6 +96,14 @@ private Usuario crearUsuario() throws SQLException{
             validarLongitud();
             validarCB();
         
+        if (this.comboBoxTipoUsuario.getSelectionModel().getSelectedItem()=="Estudiante"){
+            identificadorAlumno();
+        }  
+   
+        if (this.comboBoxTipoUsuario.getSelectionModel().getSelectedItem()=="Profesor"){
+            identificadorProfesor();
+        }  
+
             registrarUsuario();
 
             lbErrorCampos.setText("");
@@ -189,7 +197,7 @@ private Usuario crearUsuario() throws SQLException{
         this.tfNumeroTelefonico.setMinimoCaracteres(10);
         this.tfCalle.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFANUMERICOS_TEXTFIELD.getCaracteres());
         this.tfCalle.setMaximoCaracteres(50);
-        this.tfNumeroDeDomicilio.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFANUMERICOS_TEXTFIELD.getCaracteres());
+        this.tfNumeroDeDomicilio.setCaracteresPermitidos(ConstanteCaracteresLegales.NUMERICOS.getCaracteres());
         this.tfCalle.setMaximoCaracteres(50);
         this.tfMunicipio.setCaracteresPermitidos(ConstanteCaracteresLegales.ALFABETICOS_TEXTFIELD.getCaracteres());
         this.tfMunicipio.setMaximoCaracteres(50);
@@ -224,5 +232,20 @@ private Usuario crearUsuario() throws SQLException{
             throw new IllegalArgumentException("Por favor, seleccione un tipo de usuario.");
         }
     }
+    private void identificadorAlumno()throws IllegalArgumentException{
+        final boolean IDENTIFICADOR_VALIDO =
+            this.tfIdentificador.getText().startsWith("s") 
+            && tfIdentificador.getText().substring(1).matches("[0-9]*");        
+        if (IDENTIFICADOR_VALIDO==false){
+            throw new IllegalArgumentException("Por favor ingrese una matricula correcta: Comenzando por s y el resto numeros");
+        }
+    }
 
+    private void identificadorProfesor()throws IllegalArgumentException{
+        final boolean IDENTIFICADOR_VALIDO =
+        tfIdentificador.getText().matches("[0-9]*");
+        if (IDENTIFICADOR_VALIDO==false){
+            throw new IllegalArgumentException("Por favor ingrese una matricula correcta: Solo numeros");
+        }
+    }
 }
