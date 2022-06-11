@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+//JDK / STL
+import java.util.ArrayList;
 /**
  *
  * @author ale71
@@ -59,5 +61,26 @@ public class PrestamoDAO {
         return lastId;
     }
     
+    
+    public ArrayList<Integer> getIdLibrosEnPrestamo() throws SQLException
+    {
+        ArrayList<Integer> listaId = new ArrayList<Integer>();
+        String consulta  = "SELECT idLibro from prestamo";
+        DataBaseConnection db = new DataBaseConnection();
+        try(Connection conexion = db.getConexion())
+        {
+            PreparedStatement sentencia = conexion.prepareStatement(consulta);
+            ResultSet resultado = sentencia.executeQuery();
+            while(resultado.next())
+            {
+                listaId.add(resultado.getInt("idLibro"));
+            }
+        }
+        finally
+        {
+            db.desconectar();
+        }
+        return listaId;
+    }
    
 }

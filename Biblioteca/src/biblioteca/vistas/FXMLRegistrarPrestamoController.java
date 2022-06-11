@@ -30,6 +30,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.input.MouseEvent;
 
+//JDK / STL
+import java.util.ArrayList;
 /**
  * FXML Controller class
  *
@@ -62,6 +64,8 @@ public class FXMLRegistrarPrestamoController implements Initializable {
     
     private int MAX_DIAS = 7;
     
+    private ArrayList<Integer> LIBROS_DISPONIBLES;
+    
     /**
      * Initializes the controller class.
      */
@@ -85,7 +89,6 @@ public class FXMLRegistrarPrestamoController implements Initializable {
                 
                 //System.out.println("Intentando recuperar el libro " + tfNombreLibro.getText());
                 //System.out.println(split(tfNombreLibro.getText()));
-                Libro librito = conexionLibro.getLibroPorNombre(tfNombreLibro.getText());
                 //System.out.println("Intentando recuperar el Usuario " + tfMatricula.getText());
                 Usuario usuarioChido = conexionUsuario.getUsuarioPorId(tfMatricula.getText());
                 
@@ -97,7 +100,10 @@ public class FXMLRegistrarPrestamoController implements Initializable {
                 nuevoPrestamo.setFechaPrestamo(CURRENT_DATE);
                 nuevoPrestamo.setFechaDevolucion(dpDevolucion.getValue());
                 nuevoPrestamo.setIdUsuario(usuarioChido.getIdUsuario());
-                nuevoPrestamo.setIdLibro(librito.getIdLibro());
+                //Debug
+                for(Integer i: this.LIBROS_DISPONIBLES)
+                    System.out.println("Libros Disponibles: " + i);
+                nuevoPrestamo.setIdLibro(this.LIBROS_DISPONIBLES.get(0));
                 
                 //System.out.println("Prestamo id usuario " + nuevoPrestamo.getIdUsuario());
                 //System.out.println("Prestamo id libro " + nuevoPrestamo.getIdLibro());
@@ -238,6 +244,74 @@ public class FXMLRegistrarPrestamoController implements Initializable {
         return ok;
     }
     
+    private ArrayList<Integer> validarLibrosDisponibles()
+    {
+        boolean ok = true;
+        ArrayList<Integer> listaLibro = new ArrayList<Integer>();
+        ArrayList<Integer> listaPrestamo = new ArrayList<Integer>();
+        ArrayList<Integer> librosDisponibles = new ArrayList<Integer>();
+        try {
+            LibroDAO temporal = new LibroDAO();
+            listaLibro = temporal.getListaIdLibro(split(tfNombreLibro.getText()));
+            if(!listaLibro.isEmpty())
+            {
+                for(Integer i : listaLibro)
+                    System.out.println("ID Libro = " + i);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            ok = false;
+            Utilidades.mensajePerdidaDeConexion();
+        }
+        
+        if(ok && listaLibro.size() == 0)
+        {
+            ok = false;
+        }
+        if(ok && listaLibro.size() == 1)
+        {
+            ok = false;
+        }
+        
+        if(ok)
+        {
+            try 
+            {
+                PrestamoDAO temporal = new PrestamoDAO();
+                listaPrestamo = temporal.getIdLibrosEnPrestamo();
+                if(!listaPrestamo.isEmpty())
+                {
+                    for(Integer i : listaPrestamo)
+                        System.out.println("en prestamo ID Libro = " + i);
+                }
+            } 
+            catch (SQLException ex) 
+            {
+                System.out.println(ex);
+                ok = false;
+                Utilidades.mensajePerdidaDeConexion();
+            }
+        }
+        
+        if(ok)
+        {
+            for(Integer x: listaLibro)
+            {
+                boolean existe = false;
+                for(Integer y: listaPrestamo)
+                    if(x == y)
+                    {
+                        existe = true;
+                        break;
+                    }
+                if(!existe)
+                    librosDisponibles.add(x);
+            }
+        }
+        
+        return librosDisponibles;
+    }
+    
     private boolean validarCampos()
     {
         boolean ok = true;
@@ -286,7 +360,25 @@ public class FXMLRegistrarPrestamoController implements Initializable {
             lbDomicilio.setText("El usuario no existe");
         }
         
-        ok = ok && validarNombreLibro();
+        if(ok && !validarNombreLibro())
+        {
+            ok = false;
+            lbNombreLibro.setText("El libro no existe");
+        }
+        
+        if(ok)
+        {
+            this.LIBROS_DISPONIBLES = validarLibrosDisponibles();
+            //ok = ok && !this.LIBROS_DISPONIBLES.isEmpty() && this.LIBROS_DISPONIBLES.size() > 1;
+        }
+        
+        if(this.LIBROS_DISPONIBLES.size() <= 1)
+        {
+            ok = false;
+            lbNombreLibro.setText("");
+            lbNombreLibro.setText("solo queda 1 libro");
+            Utilidades.mostrarAlertaConfirmacion("ERROR", "El prestamo no puede proceder\nsolo queda 1 copia del libro", Alert.AlertType.ERROR);
+        }
         
         return ok; //ok && validarFecha(dpDevolucion.getValue());        
     }
